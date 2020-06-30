@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/24/2020
+ * Last modified : 06/30/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -40,7 +40,7 @@ t_StackHandler Stack_Hdlr =
 @param  maxS: Maximum size of stack
 @retval Pointer to new stack
 */
-Stack stack_create(uint32_t maxS)
+Stack stack_create(uint16_t maxS)
 {
   Stack newStack = (Stack)malloc(sizeof(stack)); // Memory allocation
   newStack->size = 0;                              // Initialize empty stack
@@ -105,8 +105,8 @@ uint8_t stack_push(Stack stck, Data val)
 
 /**
 @brief  Pops out an element of the stack
-@param  stck: Pointer to stack
-        top : Popped value
+@param  stck      : Pointer to stack
+        poppedVal : Popped value
 @retval TRUE if top was correctly popped, FALSE otherwise
 */
 uint8_t stack_pop(Stack stck, Data* poppedVal)

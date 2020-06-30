@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/24/2020
+ * Last modified : 06/30/2020
  * -----------------------------------------------------------------------------
  */
 #ifndef _STACK_H_
@@ -25,8 +25,8 @@
 //----------------------------------------------------------------------------//
 
 // Bool data type
-#define TRUE      1
-#define FALSE     0
+#define TRUE      (uint8_t) 1
+#define FALSE     (uint8_t) 0
 
 // Data type stored in stack
 typedef int Data;
@@ -43,8 +43,8 @@ typedef node* Node;
 // Stack
 typedef struct t_stack
 {
-  uint32_t  size;       // Stack size
-  uint32_t  maxSize;    // Max. Size
+  uint16_t  size;       // Stack size
+  uint16_t  maxSize;    // Max. Size
   Node      top;        // Pointer to Top
 } stack;
 
@@ -53,7 +53,7 @@ typedef stack* Stack;
 // Stack handler
 typedef struct
 {
-  Stack    (*init)(uint32_t maxS);
+  Stack    (*init)(uint16_t maxS);
   uint8_t  (*isEmpty)(Stack stck);
   uint8_t  (*isFull)(Stack stck);
   uint8_t  (*push)(Stack stck, Data val);
@@ -73,7 +73,7 @@ extern t_StackHandler Stack_Hdlr;
 @param  maxS: Maximum size of stack
 @retval Pointer to new stack
 */
-extern Stack stack_create(uint32_t maxS);
+extern Stack stack_create(uint16_t maxS);
 
 /**
 @brief  Verifies if stack is empty
@@ -99,8 +99,8 @@ extern uint8_t stack_push(Stack stck, Data val);
 
 /**
 @brief  Pops out an element of the stack
-@param  stck: Pointer to stack
-        top : Popped value
+@param  stck      : Pointer to stack
+        poppedVal : Popped value
 @retval TRUE if top was correctly popped, FALSE otherwise
 */
 extern uint8_t stack_pop(Stack stck, Data* poppedVal);
@@ -127,3 +127,4 @@ extern uint8_t stack_delete(Stack stck);
 extern uint8_t stack_print(Stack stck);
 
 #endif
+

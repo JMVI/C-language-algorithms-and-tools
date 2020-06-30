@@ -5,7 +5,7 @@
  * Description   : Test file for stack ADT.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/24/2020
+ * Last modified : 06/29/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -26,7 +26,7 @@ int main()
   uint8_t maxSize = 10;   // Maximum stack size
   uint16_t i = 0;         // Iterator
 
-  printf("***** BEGIN OF TEST *****");
+  printf("***** BEGIN OF TEST *****\n");
 
   // Create empty stack (max. 10 elements)
   S = Stack_Hdlr.init(maxSize);
@@ -37,8 +37,11 @@ int main()
     printf("ERROR IN MEMORY ALLOCATION\n");
     exit(-1);
   }
-
-  printf("Stack created\n");
+  else
+  {
+    printf("Stack created (Max. size: %d)\n", S->maxSize);
+  }
+  
 
   // Verify if stack is empty
   if( Stack_Hdlr.isEmpty(S) )
@@ -64,13 +67,13 @@ int main()
   // Verify if stack is not empty
   if( !Stack_Hdlr.isEmpty(S) )
   {
-    printf("Stack is not empty\n");
+    printf("Stack is not empty (%d)\n", Stack_Hdlr.isEmpty(S));
   }
 
   // Verify if stack is not full
   if( !Stack_Hdlr.isFull(S) )
   {
-    printf("Stack is not full\n");
+    printf("Stack is not full (%d)\n", Stack_Hdlr.isFull(S));
   }
 
   // Print stack
@@ -91,7 +94,49 @@ int main()
   stack_print(S);
   printf("\n");
 
-  // Delete stack
+  // Fill up stack.
+  printf("* Filling up stack *\n");
+
+  i = S->size + 1;
+
+  do
+  {
+    printf("%d elements left \n", S->maxSize - S->size);
+
+    printf("(%d) = ", S->size + 1); scanf("%d", &val); printf("\n");
+
+    if( !Stack_Hdlr.push(S, val) )
+    {
+      printf("ERROR IN PUSH OPERATION");
+    }
+
+    printf("Stack's top: %d \n", S->top->value);
+
+    printf("Stack's size: %d\n", S->size);
+
+  } while( !Stack_Hdlr.isFull(S) );
+
+  // Reprint stack
+  stack_print(S);
+  printf("\n");
+
+  // Try to push five elements into full Stack
+  for(i = 0; i < 5; i++)
+  {
+    printf("(%d) = ", S->size + 1); scanf("%d", &val); printf("\n");
+
+    if( !Stack_Hdlr.push(S, val) )
+    {
+      printf("ERROR IN PUSH OPERATION\n");
+    }
+    
+    if( Stack_Hdlr.isFull(S) )
+    {
+      printf("Stack is full\n");
+    }
+  }
+
+    // Delete stack
   if( !Stack_Hdlr.del(S) )
   {
     printf("ERROR DELETING STACK\n");
@@ -101,42 +146,6 @@ int main()
   printf("Stack deleted\n");
 
   printf("***** END OF TEST *****");
-
-/*
-   
-   
-   
-   // Reimprimir
-   printStack(S);
-   
-   // Llenar pila
-   printf("Llenar pila, restan seis (6) elementos:\n");
-   for(i = 0; i < 6; i++)
-   {
-      printf("(%d) = ", i + 1); scanf("%d", &n); printf("\n");
-      push(S, n);
-      printf("Tope de pila: %d \n", S->top->value);
-   }
-   
-   // Reimprimir
-   printStack(S);
-   
-   // Intentar llenar
-   push(S, 2);
-   
-   // Verificar pila llena
-   if(isFullStack(S))
-   {
-      printf("Pila llena\n");
-   }
-   
-   // Reimprimir
-   printStack(S);
-   
-   // Vaciar pila
-   cleanStack(S);
-   printf("PILA ELIMINADA\n");
-      */
 
   return 0;
 }
