@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/30/2020
+ * Last modified : 07/10/2020
  * -----------------------------------------------------------------------------
  */
 #ifndef _STACK_H_
@@ -53,16 +53,17 @@ typedef stack* Stack;
 // Stack handler
 typedef struct
 {
-  Stack    (*init)(uint16_t maxS);
-  uint8_t  (*isEmpty)(Stack stck);
-  uint8_t  (*isFull)(Stack stck);
-  uint8_t  (*push)(Stack stck, Data val);
-  uint8_t  (*pop)(Stack stck, Data* poppedVal);
-  uint8_t  (*clear)(Stack stck);
-  uint8_t  (*del)(Stack stck);
+  Stack    (*init)(uint16_t maxS);                // Create new stack
+  uint8_t  (*isEmpty)(Stack stck);                // Is stack empty?
+  uint8_t  (*isFull)(Stack stck);                 // Is stack full?
+  uint8_t  (*push)(Stack stck, Data val);         // Push
+  uint8_t  (*pop)(Stack stck, Data* poppedVal);   // Pop
+  uint8_t  (*clear)(Stack stck);                  // Clear
+  uint8_t  (*del)(Stack stck);                    // Delete
 }t_StackHandler;
 
 extern t_StackHandler Stack_Hdlr;
+
 
 //----------------------------------------------------------------------------//
 //                              Public functions                              //
@@ -127,4 +128,3 @@ extern uint8_t stack_delete(Stack stck);
 extern uint8_t stack_print(Stack stck);
 
 #endif
-

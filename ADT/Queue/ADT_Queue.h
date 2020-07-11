@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/30/2020
+ * Last modified : 07/10/2020
  * -----------------------------------------------------------------------------
  */
 #ifndef _QUEUE_H_
@@ -54,13 +54,13 @@ typedef queue* Queue;
 // Queue handler
 typedef struct
 {
-  Queue    (*init)(uint16_t maxS);
-  uint8_t  (*isEmpty)(Queue q);
-  uint8_t  (*isFull)(Queue q);
-  uint8_t  (*enqueue)(Queue q, Data val);
-  uint8_t  (*dequeue)(Queue q, Data* removedVal);
-  uint8_t  (*clear)(Queue q);
-  uint8_t  (*del)(Queue q);
+  Queue    (*init)(uint16_t maxS);                  // Create new queue
+  uint8_t  (*isEmpty)(Queue q);                     // Is queue empty?
+  uint8_t  (*isFull)(Queue q);                      // Is queue full?
+  uint8_t  (*enqueue)(Queue q, Data val);           // Enqueue
+  uint8_t  (*dequeue)(Queue q, Data* removedVal);   // Dequeue
+  uint8_t  (*clear)(Queue q);                       // Clear
+  uint8_t  (*del)(Queue q);                         // Delete
 }t_QueueHandler;
 
 extern t_QueueHandler Q_Hdlr;
