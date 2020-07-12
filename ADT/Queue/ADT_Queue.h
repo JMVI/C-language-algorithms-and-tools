@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/10/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
 #ifndef _QUEUE_H_
@@ -63,7 +63,7 @@ typedef struct
   uint8_t  (*del)(Queue q);                         // Delete
 }t_QueueHandler;
 
-extern t_QueueHandler Q_Hdlr;
+extern t_QueueHandler Queue_Hdlr;
 
 //----------------------------------------------------------------------------//
 //                              Public functions                              //

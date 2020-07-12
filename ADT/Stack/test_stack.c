@@ -5,7 +5,7 @@
  * Description   : Test file for stack ADT.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/29/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -22,7 +22,7 @@
 int main() 
 {
   Stack S = NULL;         // New stack
-  int val = 0;            // Read value
+  Data val = 0;           // Read value
   uint8_t maxSize = 10;   // Maximum stack size
   uint16_t i = 0;         // Iterator
 
@@ -41,7 +41,6 @@ int main()
   {
     printf("Stack created (Max. size: %d)\n", S->maxSize);
   }
-  
 
   // Verify if stack is empty
   if( Stack_Hdlr.isEmpty(S) )
@@ -61,7 +60,9 @@ int main()
       printf("ERROR IN PUSH OPERATION");
     }
 
-    printf("Stack's top: %d \n", S->top->value );
+    // Print stack
+    stack_print(S);
+    printf("\n");
   }
   
   // Verify if stack is not empty
@@ -75,10 +76,6 @@ int main()
   {
     printf("Stack is not full (%d)\n", Stack_Hdlr.isFull(S));
   }
-
-  // Print stack
-  stack_print(S);
-  printf("\n");
 
   // Pop out top
   printf("* Pops top *\n");
@@ -110,17 +107,17 @@ int main()
       printf("ERROR IN PUSH OPERATION");
     }
 
-    printf("Stack's top: %d \n", S->top->value);
+    // Print stack
+    stack_print(S);
+    printf("\n");
 
     printf("Stack's size: %d\n", S->size);
 
   } while( !Stack_Hdlr.isFull(S) );
 
-  // Reprint stack
-  stack_print(S);
-  printf("\n");
+  // Try to push five elements into full stack
+  printf("* Try to push into full stack *\n");
 
-  // Try to push five elements into full Stack
   for(i = 0; i < 5; i++)
   {
     printf("(%d) = ", S->size + 1); scanf("%d", &val); printf("\n");
@@ -136,7 +133,7 @@ int main()
     }
   }
 
-    // Delete stack
+  // Delete stack
   if( !Stack_Hdlr.del(S) )
   {
     printf("ERROR DELETING STACK\n");
@@ -149,3 +146,4 @@ int main()
 
   return 0;
 }
+

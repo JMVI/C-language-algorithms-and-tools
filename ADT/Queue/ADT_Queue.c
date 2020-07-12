@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/01/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -147,19 +147,20 @@ uint8_t queue_remove(Queue q, Data* deqVal)
 */
 uint8_t queue_clear(Queue q)
 {
-/*
-   if( q != NULL ) 
-   {
-      int i;
-      
-      for(i = 0; i < q->size; i++)
-      {
-         dequeue(q);
-      }
-      
-      free(q);
-   }
-*/
+  uint16_t i = 0;     // Iterator
+  Data auxVal;        // Auxiliary value
+
+  // Validates indicated queue
+  if( q != NULL && !Queue_Hdlr.isEmpty(q) )
+  {
+    for(i = 0; i < q->size; i++)
+    {
+      Queue_Hdlr.dequeue(q, &auxVal);
+    }
+
+    return TRUE;
+  }
+
   return FALSE;
 }
 
@@ -170,6 +171,21 @@ uint8_t queue_clear(Queue q)
 */
 uint8_t queue_delete(Queue q)
 {
+  // Validates indicated queue
+  if( q != NULL ) 
+  { 
+    // Clear queue
+    if( !Queue_Hdlr.clear(q) )
+    {
+      return FALSE;
+    }
+
+    // Frees allocated memory of queue
+    free(q);
+    
+    return TRUE;
+  }
+          
   return FALSE;
 }
 
@@ -180,29 +196,41 @@ uint8_t queue_delete(Queue q)
 */
 uint8_t queue_print(Queue q)
 {
-/*
-   if( q != NULL && !isEmptyQueue(q) )
-   {
-      Node* sel = q->front;
-      int i = 0;
+  // Validates indicated stack
+  if( q != NULL && !Queue_Hdlr.isEmpty(q) )
+  {
+    Node sel = q->front;  // Selector
+    uint16_t i = 0;       // Iterator
       
-      for(i = 0; i < q->size; i++)
+    for(i = 0; i < q->size; i++)
+    {
+      if(sel == q->front && sel == q->tail)
       {
-         if(sel == q->tail)
-         {
-            printf("- %d (T)\n", sel->value);
-         }
-         else if(sel == q->front)
-         {
-            printf("(F) %d ", sel->value);
-         }
-         else
-         {
-            printf("- %d ", sel->value);
-         }
-         sel = sel->next;
+        // Printing a single-value queue
+        printf("(F) %d (T)\n", sel->value);
       }
-   }
-*/
+      else if(sel == q->front)
+      {
+        // Printing first element (front)
+        printf("(F) %d ", sel->value);
+      }
+      else if(sel == q->tail)
+      {
+        // Printing last element (tail)
+        printf("- %d (T)\n", sel->value);
+      }
+      else
+      {
+        // Printing inner element
+        printf("- %d ", sel->value);
+      }
+      
+      sel = sel->next;
+    }
+
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
