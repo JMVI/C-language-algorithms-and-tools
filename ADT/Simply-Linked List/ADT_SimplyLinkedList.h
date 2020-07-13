@@ -6,9 +6,10 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/10/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
+
 #ifndef _SLINKEDLIST_H_
 #define _SLINKEDLIST_H_
 
@@ -28,10 +29,10 @@
 #define TRUE      (uint8_t) 1
 #define FALSE     (uint8_t) 0
 
-// Data type stored in stack
+// Data type stored in list
 typedef int Data;
 
-// Stack node
+// List node
 typedef struct t_node
 {
   Data            value;    // Stored data
@@ -51,7 +52,7 @@ typedef struct t_list
 
 typedef linked_list* LList;
 
-// Stack handler
+// List handler
 typedef struct
 {
   LList   (*init)(uint16_t maxS);                         // Create linked list
@@ -64,6 +65,12 @@ typedef struct
   uint8_t (*clear)(LList stck);                           // Clear list
   uint8_t (*erase)(LList stck);                           // Erase list
 }t_LListHandler;
+
+extern t_LListHandler LList_Hdlr;
+
+//----------------------------------------------------------------------------//
+//                              Public functions                              //
+//----------------------------------------------------------------------------//
 
 /**
 @brief  Allocates memory to create a new list
@@ -128,11 +135,11 @@ extern uint8_t llist_deleteItem(LList ll, uint16_t index);
 extern uint8_t llist_clear(LList ll);
 
 /**
-@brief  Deletes list and frees allocated memory
+@brief  Erases list and frees allocated memory
 @param  ll: Pointer to list
-@retval TRUE if list was deleted with no error, FALSE otherwise
+@retval TRUE if list was erased with no error, FALSE otherwise
 */
-extern uint8_t llist_delete(LList ll);
+extern uint8_t llist_erase(LList ll);
 
 /**
 @brief  Prints list's elements on screen

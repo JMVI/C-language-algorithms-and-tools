@@ -6,9 +6,10 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/10/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
+
 #ifndef _STACK_H_
 #define _STACK_H_
 
@@ -63,7 +64,6 @@ typedef struct
 }t_StackHandler;
 
 extern t_StackHandler Stack_Hdlr;
-
 
 //----------------------------------------------------------------------------//
 //                              Public functions                              //

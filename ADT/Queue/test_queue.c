@@ -22,7 +22,7 @@
 int main()
 {
   Queue Q = NULL;         // New queue
-  Data val = 0;            // Read value
+  Data val = 0;           // Read value
   uint8_t maxSize = 10;   // Maximum stack size
   uint16_t i = 0;         // Iterator
 

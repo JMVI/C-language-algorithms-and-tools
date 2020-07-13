@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 06/30/2020
+ * Last modified : 07/12/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -31,6 +31,7 @@ t_StackHandler Stack_Hdlr =
   stack_clear,      // Clear
   stack_delete      // Delete
 };
+
 //----------------------------------------------------------------------------//
 //                              Public functions                              //
 //----------------------------------------------------------------------------//
@@ -42,10 +43,10 @@ t_StackHandler Stack_Hdlr =
 */
 Stack stack_create(uint16_t maxS)
 {
-  Stack newStack = (Stack)malloc(sizeof(stack)); // Memory allocation
-  newStack->size = 0;                              // Initialize empty stack
-  newStack->top = NULL;                            // Initial top
-  newStack->maxSize = maxS;                        // Fix max. size
+  Stack newStack = (Stack)malloc(sizeof(stack));  // Memory allocation
+  newStack->size = 0;                             // Initialize empty stack
+  newStack->top = NULL;                           // Initial top
+  newStack->maxSize = maxS;                       // Fix max. size
 
   return newStack;
 }
@@ -111,15 +112,15 @@ uint8_t stack_push(Stack stck, Data val)
 */
 uint8_t stack_pop(Stack stck, Data* poppedVal)
 {
-  Node aux = stck->top;     // Auxiliary pointer
+  Node auxSel = stck->top;     // Auxiliary pointer
 
   // Validates indicated stack
   if( stck != NULL && !Stack_Hdlr.isEmpty(stck) )
   {
-    *poppedVal = aux->value;
-    stck->top = stck->top->next;
-    stck->size--;
-    free(aux);
+    *poppedVal = auxSel->value;   // Reads popped element
+    stck->top = stck->top->next;  // Updates top pointer
+    free(auxSel);                 // Frees allocated memory of popped node
+    stck->size--;                 // Decreases size
     
     return TRUE;
   }
@@ -184,12 +185,12 @@ uint8_t stack_delete(Stack stck)
 */
 uint8_t stack_print(Stack stck)
 {
+  Node sel = stck->top;    // Selector
+  uint16_t i = 0;          // Iterator
+
   // Validates indicated stack
   if( stck != NULL && !Stack_Hdlr.isEmpty(stck) )
   {
-    Node sel = stck->top;    // Selector
-    uint16_t i = 0;          // Iterator
-    
     for(i = 0; i < stck->size; i++)
     {
       printf("S(%d) : %d\n", i, sel->value);

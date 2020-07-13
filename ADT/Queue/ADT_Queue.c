@@ -43,11 +43,11 @@ t_QueueHandler Queue_Hdlr =
 */
 Queue queue_create(uint16_t maxS)
 {
-  Queue newQueue = (Queue)malloc(sizeof(queue));
-  newQueue->size = 0;
-  newQueue->front = NULL;
-  newQueue->tail = NULL;
-  newQueue->maxSize = maxS;
+  Queue newQueue = (Queue)malloc(sizeof(queue)); // Memory allocation
+  newQueue->size = 0;                            // Initializes empty queue
+  newQueue->front = NULL;                        // Initial front
+  newQueue->tail = NULL;                         // Initial tail
+  newQueue->maxSize = maxS;                      // Fix max. size
   
   return newQueue;
 }
@@ -91,17 +91,17 @@ uint8_t queue_insert(Queue q, Data val)
   // Validates indicated queue
   if( q != NULL && !Queue_Hdlr.isFull(q) )
   {
-    newNode->value = val;         // Stores inserted value
+    newNode->value = val;       // Stores inserted value
     newNode->next = NULL;
     
     // Verifies if there are no elements
     if(q->front == NULL)
     {
-      q->front = newNode;       
+      q->front = newNode;       // New element becomes the front of queue
     }
     else
     {
-      q->tail->next = newNode;  
+      q->tail->next = newNode;  // Updates tail's pointer to next element
     }
    
     q->tail = newNode;     // Last element in queue
@@ -124,15 +124,15 @@ uint8_t queue_insert(Queue q, Data val)
 */
 uint8_t queue_remove(Queue q, Data* deqVal)
 {
-  Node aux = q->front;       // Auxiliary pointer
+  Node selAux = q->front;          // Auxiliary pointer
 
   // Validates indicated queue
   if( q != NULL && !Queue_Hdlr.isEmpty(q) )
   {
-    *deqVal = aux->value;
-     q->front = q->front->next;
-     free(aux);
-     q->size--;
+    *deqVal = selAux->value;       // Reads dequeued element
+     q->front = q->front->next;    // Updates front pointer
+     free(selAux);                 // Frees allocated memory of dequeued node
+     q->size--;                    // Decreases size
 
     return TRUE;
   }
@@ -153,6 +153,7 @@ uint8_t queue_clear(Queue q)
   // Validates indicated queue
   if( q != NULL && !Queue_Hdlr.isEmpty(q) )
   {
+    // Dequeues all elements
     for(i = 0; i < q->size; i++)
     {
       Queue_Hdlr.dequeue(q, &auxVal);
@@ -174,7 +175,7 @@ uint8_t queue_delete(Queue q)
   // Validates indicated queue
   if( q != NULL ) 
   { 
-    // Clear queue
+    // Clears queue
     if( !Queue_Hdlr.clear(q) )
     {
       return FALSE;
@@ -196,12 +197,12 @@ uint8_t queue_delete(Queue q)
 */
 uint8_t queue_print(Queue q)
 {
+  Node sel = q->front;  // Selector
+  uint16_t i = 0;       // Iterator
+
   // Validates indicated stack
   if( q != NULL && !Queue_Hdlr.isEmpty(q) )
-  {
-    Node sel = q->front;  // Selector
-    uint16_t i = 0;       // Iterator
-      
+  { 
     for(i = 0; i < q->size; i++)
     {
       if(sel == q->front && sel == q->tail)
