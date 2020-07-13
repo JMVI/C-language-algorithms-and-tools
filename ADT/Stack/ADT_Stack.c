@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/12/2020
+ * Last modified : 07/13/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -93,7 +93,7 @@ uint8_t stack_push(Stack stck, Data val)
     newNode->value = val;        // Stores inserted value
     newNode->next = stck->top;   // Links node to stack
     stck->top = newNode;         // Updates the top
-    stck->size++;                // Increments size
+    stck->size++;                // Increases size
     
     return TRUE;
   }

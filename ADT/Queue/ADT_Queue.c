@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/12/2020
+ * Last modified : 07/13/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -105,7 +105,7 @@ uint8_t queue_insert(Queue q, Data val)
     }
    
     q->tail = newNode;     // Last element in queue
-    q->size++;             // Increments size
+    q->size++;             // Increases size
     
     return TRUE;
   }
