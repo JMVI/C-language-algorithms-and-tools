@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/12/2020
+ * Last modified : 07/19/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -93,7 +93,10 @@ uint8_t llist_addItem(LList ll, Data val)
   // Validates indicated list
   if( ll != NULL && !LList_Hdlr.isFull(ll) )
   {
-    // Stores inserted value
+    // Stores value
+    newNode->value = val;
+   
+    // Adds new node to list
     if(LList_Hdlr.isEmpty(ll))
     {
       ll->first = newNode;
