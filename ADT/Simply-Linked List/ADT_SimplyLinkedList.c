@@ -95,7 +95,7 @@ uint8_t llist_addItem(LList ll, Data val)
   {
     // Stores value
     newNode->value = val;
-   
+    
     // Adds new node to list
     if(LList_Hdlr.isEmpty(ll))
     {
@@ -131,7 +131,7 @@ uint8_t llist_readItem(LList ll, uint16_t index, Data* val)
   uint16_t i = 0;             // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index < ll->size - 1)
+  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
     for(i = 0; i < index; i++)
     {
@@ -160,7 +160,7 @@ uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
   uint16_t i = 0;             // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index < ll->size - 1)
+  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
     for(i = 0; i < index; i++)
     {
@@ -189,7 +189,7 @@ uint8_t llist_deleteItem(LList ll, uint16_t index)
   uint16_t i = 0;             // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index < ll->size - 1)
+  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
     if(index == 0)
     {
@@ -206,13 +206,24 @@ uint8_t llist_deleteItem(LList ll, uint16_t index)
       }
 
       selAux = selNode->next;
-      selNode->next = selNode->next->next;
-    }
-      free(selAux);     // Frees allocated memory of selected node
-      ll->size--;       // Decreases size
       
-      return TRUE;
-   }
+      if(index == ll->size - 1)
+      {
+        ll->last = selNode;
+        ll->last->next = NULL;
+      }
+      else
+      {
+        selNode->next = selNode->next->next;
+      }
+        
+    }
+    
+    free(selAux);     // Frees allocated memory of selected node
+    ll->size--;       // Decreases size
+    
+    return TRUE;
+  }
 
   return FALSE;
 }
@@ -285,6 +296,11 @@ uint8_t llist_print(LList ll)
       printf("L(%d) : %d\n", i, sel->value);
       sel = sel->next;
     }
+    printf("\n");
+    
+    printf("First element: %d\n", ll->first->value);
+    
+    printf("Last element: %d\n", ll->last->value);
     
     return TRUE;
   }
