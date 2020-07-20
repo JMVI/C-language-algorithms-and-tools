@@ -1,8 +1,8 @@
 /* -----------------------------------------------------------------------------
  * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
- * Filename      : ADT_SimplyLinkedList.h
- * Description   : Abstract Data Type for simply linked list. Implementation 
+ * Filename      : ADT_DoublyLinkedList.h
+ * Description   : Abstract Data Type for doubly linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
@@ -10,8 +10,8 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef _SLINKEDLIST_H_
-#define _SLINKEDLIST_H_
+#ifndef _DLINKEDLIST_H_
+#define _DLINKEDLIST_H_
 
 //----------------------------------------------------------------------------//
 //                                Header files                                //
@@ -37,11 +37,12 @@ typedef struct t_node
 {
   Data            value;    // Stored data
   struct t_node*  next;     // Pointer to next element
+  struct t_node*  previous; // Pointer to previous element
 } node;
 
 typedef node* Node;
 
-// Simply linked list
+// Doubly linked list
 typedef struct t_list
 {
   uint16_t size;       // List size
@@ -50,23 +51,23 @@ typedef struct t_list
   Node     last;       // Last element
 } linked_list;
 
-typedef linked_list* LList;
+typedef linked_list* DList;
 
 // List handler
 typedef struct
 {
-  LList   (*init)(uint16_t maxS);                         // Create linked list
-  uint8_t (*isEmpty)(LList ll);                           // Is list empty?
-  uint8_t (*isFull)(LList ll);                            // Is list empty?
-  uint8_t (*add)(LList ll, Data val);                     // Add element
-  uint8_t (*read)(LList ll, uint16_t index, Data* val);   // Read element
-  uint8_t (*update)(LList ll, uint16_t index, Data val);  // Update element
-  uint8_t (*del)(LList ll, uint16_t index);               // Delete element
-  uint8_t (*clear)(LList ll);                             // Clear list
-  uint8_t (*erase)(LList ll);                             // Erase list
-}t_LListHandler;
+  DList   (*init)(uint16_t maxS);                         // Create linked list
+  uint8_t (*isEmpty)(DList dll);                          // Is list empty?
+  uint8_t (*isFull)(DList dll);                           // Is list empty?
+  uint8_t (*add)(DList dll, Data val);                    // Add element
+  uint8_t (*read)(DList dll, uint16_t index, Data* val);  // Read element
+  uint8_t (*update)(DList dll, uint16_t index, Data val); // Update element
+  uint8_t (*del)(DList dll, uint16_t index);              // Delete element
+  uint8_t (*clear)(DList dll);                            // Clear list
+  uint8_t (*erase)(DList dll);                            // Erase list
+}t_DListHandler;
 
-extern t_LListHandler LList_Hdlr;
+extern t_DListHandler DList_Hdlr;
 
 //----------------------------------------------------------------------------//
 //                              Public functions                              //
@@ -77,76 +78,76 @@ extern t_LListHandler LList_Hdlr;
 @param  maxS: Maximum size of list
 @retval Pointer to new list
 */
-extern LList llist_createLinkedList(uint16_t maxS);
+extern DList dlist_createLinkedList(uint16_t maxS);
 
 /**
 @brief  Verifies if list is empty
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list is empty, FALSE otherwise
 */
-extern uint8_t llist_isEmpty(LList ll);
+extern uint8_t dlist_isEmpty(DList dll);
 
 /**
 @brief  Verifies if list is full
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list is full, FALSE otherwise
 */
-extern uint8_t llist_isFull(LList ll);
+extern uint8_t dlist_isFull(DList dll);
 
 /**
 @brief  Adds an element into the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         val: Value
 @retval TRUE if value was correctly added, FALSE otherwise
 */
-extern uint8_t llist_addItem(LList ll, Data val);
+extern uint8_t dlist_addItem(DList dll, Data val);
 
 /**
 @brief  Reads an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
         val: Value
 @retval TRUE if value was correctly read, FALSE otherwise
 */
-extern uint8_t llist_readItem(LList ll, uint16_t index, Data* val);
+extern uint8_t dlist_readItem(DList dll, uint16_t index, Data* val);
 
 /**
 @brief  Updates an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
         val: Value
 @retval TRUE if value was correctly updated, FALSE otherwise
 */
-extern uint8_t llist_updateItem(LList ll, uint16_t index, Data val);
+extern uint8_t dlist_updateItem(DList dll, uint16_t index, Data val);
 
 /**
 @brief  Deletes an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
 @retval TRUE if value was correctly deleted, FALSE otherwise
 */
-extern uint8_t llist_deleteItem(LList ll, uint16_t index);
+extern uint8_t dlist_deleteItem(DList dll, uint16_t index);
 
 /**
 @brief  Clears all elements of list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list was cleared with no error, FALSE otherwise
 */
-extern uint8_t llist_clear(LList ll);
+extern uint8_t dlist_clear(DList dll);
 
 /**
 @brief  Erases list and frees allocated memory
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list was erased with no error, FALSE otherwise
 */
-extern uint8_t llist_erase(LList ll);
+extern uint8_t dlist_erase(DList dll);
 
 /**
 @brief  Prints list's elements on screen
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if there was an error printing, FALSE otherwise
 */
-extern uint8_t llist_print(LList ll);
+extern uint8_t dlist_print(DList dll);
 
 #endif
 

@@ -2,7 +2,7 @@
  * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_SimplyLinkedList.c
- * Description   : Abstract Data Type for simply liked list. Implementation 
+ * Description   : Abstract Data Type for simply linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
