@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
  * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
- * Filename      : ADT_SimplyLinkedList.c
- * Description   : Abstract Data Type for simply linked list. Implementation 
+ * Filename      : ADT_DoublyLinkedList.c
+ * Description   : Abstract Data Type for doubly linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/19/2020
+ * Last modified : 07/22/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -14,24 +14,24 @@
 //                                Header files                                //
 //----------------------------------------------------------------------------//
 
-#include"ADT_SimplyLinkedList.h"
+#include"ADT_DoublyLinkedList.h"
 
 //----------------------------------------------------------------------------//
 //                            General definitions                             //
 //----------------------------------------------------------------------------//
 
 // List handler
-t_LListHandler LList_Hdlr =
+t_DListHandler DList_Hdlr =
 {
-  llist_createLinkedList,  // Create linked list
-  llist_isEmpty,           // Is list empty?
-  llist_isFull,            // Is list empty?
-  llist_addItem,           // Add element
-  llist_readItem,          // Read element
-  llist_updateItem,        // Update element
-  llist_deleteItem,        // Delete element
-  llist_clear,             // Clear list
-  llist_erase              // Erase list
+  dlist_createLinkedList,  // Create linked list
+  dlist_isEmpty,           // Is list empty?
+  dlist_isFull,            // Is list empty?
+  dlist_addItem,           // Add element
+  dlist_readItem,          // Read element
+  dlist_updateItem,        // Update element
+  dlist_deleteItem,        // Delete element
+  dlist_clear,             // Clear list
+  dlist_erase              // Erase list
 };
 
 //----------------------------------------------------------------------------//
@@ -43,9 +43,9 @@ t_LListHandler LList_Hdlr =
 @param  maxS: Maximum size of list
 @retval Pointer to new list
 */
-LList llist_createLinkedList(uint16_t maxS)
+DList dlist_createLinkedList(uint16_t maxS)
 {
-  LList newList = (LList)malloc(sizeof(linked_list)); // Memory allocation
+  DList newList = (DList)malloc(sizeof(linked_list)); // Memory allocation
   newList->size = 0;                                  // Initializes empty list
   newList->first = NULL;                              // Initial first element
   newList->last = NULL;                               // Initial last element
@@ -56,31 +56,31 @@ LList llist_createLinkedList(uint16_t maxS)
 
 /**
 @brief  Verifies if list is empty
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list is empty, FALSE otherwise
 */
-uint8_t llist_isEmpty(LList ll)
+uint8_t dlist_isEmpty(DList dll)
 {
-  return (ll->size == 0) ? TRUE : FALSE;
+  return (dll->size == 0) ? TRUE : FALSE;
 }
 
 /**
 @brief  Verifies if list is full
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list is full, FALSE otherwise
 */
-uint8_t llist_isFull(LList ll)
+uint8_t dlist_isFull(DList dll)
 {
-  return (ll->size == ll->maxSize) ? TRUE : FALSE;
+  return (dll->size == dll->maxSize) ? TRUE : FALSE;
 }
 
 /**
 @brief  Adds an element into the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         val: Value
 @retval TRUE if value was correctly added, FALSE otherwise
 */
-uint8_t llist_addItem(LList ll, Data val)
+uint8_t dlist_addItem(DList dll, Data val)
 {
   Node newNode = (Node)malloc(sizeof(node)); // Memory allocation for node
   
@@ -91,23 +91,28 @@ uint8_t llist_addItem(LList ll, Data val)
   }
 
   // Validates indicated list
-  if( ll != NULL && !LList_Hdlr.isFull(ll) )
+  if( dll != NULL && !DList_Hdlr.isFull(dll) )
   {
     // Stores value
     newNode->value = val;
     
+    // Initializes pointers
+    newNode->next = NULL;
+    newNode->previous = NULL;
+    
     // Adds new node to list
-    if(LList_Hdlr.isEmpty(ll))
+    if(DList_Hdlr.isEmpty(dll))
     {
-      ll->first = newNode;
+      dll->first = newNode;
     }
     else
     {
-      ll->last->next = newNode;
+      dll->last->next = newNode;
+      newNode->previous = dll->last
     }
   
-    ll->last = newNode;   // Last element in list
-    ll->size++;           // Increases size
+    dll->last = newNode;    // Last element in list
+    dll->size++;            // Increases size
     
     return TRUE;
   }
@@ -133,14 +138,9 @@ uint8_t llist_readItem(LList ll, uint16_t index, Data* val)
   // Validates indicated list
   if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
-    for(i = 0; i < index; i++)
-    {
-      selNode = selNode->next;
-    }
-
-    // Reads value
-    *val = selNode->value;
-
+    // Binary search
+    // (...)
+    
     return TRUE;
   }
 
@@ -162,10 +162,8 @@ uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
   // Validates indicated list
   if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
-    for(i = 0; i < index; i++)
-    {
-      selNode = selNode->next;
-    }
+    // Binary search
+    // (...)
 
     // Updated value
     selNode->value = val;
@@ -191,33 +189,7 @@ uint8_t llist_deleteItem(LList ll, uint16_t index)
   // Validates indicated list
   if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
   {
-    if(index == 0)
-    {
-      // Deletes first item
-      selAux = ll->first;
-      ll->first = ll->first->next;
-    }
-    else
-    {
-      // Finds previous node
-      for(i = 0; i < index - 1; i++)
-      {
-        selNode = selNode->next;
-      }
-
-      selAux = selNode->next;
-      
-      if(index == ll->size - 1)
-      {
-        ll->last = selNode;
-        ll->last->next = NULL;
-      }
-      else
-      {
-        selNode->next = selNode->next->next;
-      }
-        
-    }
+    // (...)
     
     free(selAux);     // Frees allocated memory of selected node
     ll->size--;       // Decreases size
@@ -231,20 +203,20 @@ uint8_t llist_deleteItem(LList ll, uint16_t index)
 
 /**
 @brief  Clears all elements of list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list was cleared with no error, FALSE otherwise
 */
-uint8_t llist_clear(LList ll)
+uint8_t dlist_clear(DList dll)
 {
   uint16_t i = 0;         // Iterator
 
   // Validates indicated list
-  if(ll != NULL) 
+  if(dll != NULL) 
   {
-    for(i = 0; i < ll->size; i++)
+    for(i = 0; i < dll->size; i++)
     {
       // Deletes all items from first node
-      LList_Hdlr.del(ll, 0);
+      DList_Hdlr.del(dll, 0);
     }
     
     return TRUE;
@@ -255,22 +227,22 @@ uint8_t llist_clear(LList ll)
 
 /**
 @brief  Erases list and frees allocated memory
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if list was erased with no error, FALSE otherwise
 */
-uint8_t llist_erase(LList ll)
+uint8_t dlist_erase(DList dll)
 {
   // Validates indicated list
-  if( ll != NULL ) 
+  if( dll != NULL ) 
   { 
     // Clears list
-    if( !LList_Hdlr.clear(ll) )
+    if( !DList_Hdlr.clear(dll) )
     {
       return FALSE;
     }
 
     // Frees allocated memory of list
-    free(ll);
+    free(dll);
     
     return TRUE;
   }
@@ -280,27 +252,27 @@ uint8_t llist_erase(LList ll)
 
 /**
 @brief  Prints list's elements on screen
-@param  ll: Pointer to list
+@param  dll: Pointer to list
 @retval TRUE if there was an error printing, FALSE otherwise
 */
-uint8_t llist_print(LList ll)
+uint8_t dlist_print(DList dll)
 {
-  Node sel = ll->first;    // Selector
-  uint16_t i = 0;          // Iterator
+  Node sel = dll->first;    // Selector
+  uint16_t i = 0;           // Iterator
 
   // Validates indicated list
-  if( ll != NULL && !LList_Hdlr.isEmpty(ll) )
+  if( dll != NULL && !DList_Hdlr.isEmpty(dll) )
   {    
-    for(i = 0; i < ll->size; i++)
+    for(i = 0; i < dll->size; i++)
     {
       printf("L(%d) : %d\n", i, sel->value);
       sel = sel->next;
     }
     printf("\n");
     
-    printf("First element: %d\n", ll->first->value);
+    printf("First element: %d\n", dll->first->value);
     
-    printf("Last element: %d\n", ll->last->value);
+    printf("Last element: %d\n", dll->last->value);
     
     return TRUE;
   }
