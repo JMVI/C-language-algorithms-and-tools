@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/22/2020
+ * Last modified : 07/24/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -125,21 +125,44 @@ uint8_t dlist_addItem(DList dll, Data val)
 
 /**
 @brief  Reads an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
         val: Value
 @retval TRUE if value was correctly read, FALSE otherwise
 */
-uint8_t llist_readItem(LList ll, uint16_t index, Data* val)
+uint8_t dlist_readItem(LList dll, uint16_t index, Data* val)
 {
-  Node selNode = ll->first;   // Selector
+  Node selNode = NULL;        // Selector
   uint16_t i = 0;             // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
+  if(dll != NULL && !DList_Hdlr.isEmpty(dll) && 
+      index >= 0 && index <= dll-> size - 1     )
   {
-    // Binary search
-    // (...)
+    // Finds nearest bound to element
+    if(index < dll->size/2)
+    {
+      // First half of the list
+      selNode = dll->first;
+      
+      for(i = 0; i < index; i++)
+      {
+        selNode = selNode->next;
+      }
+    }
+    else
+    {
+      // Second half of the list
+      selNode = dll->last;
+      
+      for(i = dll->size - 1; i > index; i--)
+      {
+        selNode = selNode->previous;
+      }
+    }
+    
+    // Reads value
+    *val = selNode->value;
     
     return TRUE;
   }
@@ -156,16 +179,36 @@ uint8_t llist_readItem(LList ll, uint16_t index, Data* val)
 */
 uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
 {
-  Node selNode = ll->first;   // Selector
-  uint16_t i = 0;             // Iterator
+  Node selNode = NULL;      // Selector
+  uint16_t i = 0;           // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
+  if(dll != NULL && !DList_Hdlr.isEmpty(dll) && 
+      index >= 0 && index <= dll-> size - 1     )
   {
-    // Binary search
-    // (...)
-
-    // Updated value
+    // Finds nearest bound to element
+    if(index < dll->size/2)
+    {
+      // First half of the list
+      selNode = dll->first;
+      
+      for(i = 0; i < index; i++)
+      {
+        selNode = selNode->next;
+      }
+    }
+    else
+    {
+      // Second half of the list
+      selNode = dll->last;
+      
+      for(i = dll->size - 1; i > index; i--)
+      {
+        selNode = selNode->previous;
+      }
+    }
+    
+    // Updates value
     selNode->value = val;
 
     return TRUE;
@@ -176,20 +219,75 @@ uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
 
 /**
 @brief  Deletes an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
 @retval TRUE if value was correctly deleted, FALSE otherwise
 */
-uint8_t llist_deleteItem(LList ll, uint16_t index)
+uint8_t dlist_deleteItem(DList dll, uint16_t index)
 {
-  Node selNode = ll->first;   // Selector
+  Node selNode = NULL;        // Selector
   Node selAux = NULL;         // Auxiliary pointer (element to be deleted)
   uint16_t i = 0;             // Iterator
 
   // Validates indicated list
-  if(ll != NULL && !LList_Hdlr.isEmpty(ll) && index >= 0 && index <= ll->size-1)
+  if(dll != NULL && !DList_Hdlr.isEmpty(dll) && 
+      index >= 0 && index <= dll-> size - 1     )
   {
-    // (...)
+    if(index == 0)
+    {
+      // Deletes first item
+      selAux = dll->first;
+      dll->first = dll->first->next;
+    }
+    else if(index == size - 1)
+    {
+      // Deletes last item
+      selAux = dll->last;
+      dll->last = dll->last->previous;
+      dll->last->next = NULL;
+    }
+    else
+    {
+      // Finds nearest bound to element
+      if(index < dll->size/2)
+      {
+        // First half of the list
+        selNode = dll->first;
+        
+        // Finds previous node
+        for(i = 0; i < index - 1; i++)
+        {
+          selNode = selNode->next;
+        }
+        
+        selAux = selNode->next;
+        
+      }
+      else
+      {
+        // Second half of the list
+        selNode = dll->last;
+        
+        // Finds next node
+        for(i = dll->size - 1; i > index; i--)
+        {
+          selNode = selNode->previous;
+        }
+
+
+      selAux = selNode->next;
+      
+      if(index == ll->size - 1)
+      {
+        ll->last = selNode;
+        ll->last->next = NULL;
+      }
+      else
+      {
+        selNode->next = selNode->next->next;
+      }
+        
+    }
     
     free(selAux);     // Frees allocated memory of selected node
     ll->size--;       // Decreases size

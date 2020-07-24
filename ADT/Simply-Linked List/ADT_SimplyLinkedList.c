@@ -167,7 +167,7 @@ uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
       selNode = selNode->next;
     }
 
-    // Updated value
+    // Updates value
     selNode->value = val;
 
     return TRUE;
