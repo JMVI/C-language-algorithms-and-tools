@@ -73,7 +73,7 @@ uint8_t vector_isNull(Vector V)
         V2: Pointer to second vector
 @retval TRUE if vectors are equal, FALSE otherwise
 */
-uint8_t vector_areEqual(Vector V1, Vector V2);
+uint8_t vector_areEqual(Vector V1, Vector V2)
 {
   if(V1[vx] == V2[vx] && V1[vy] == V2[vy] && V1[vz] == V2[vz])
   {
@@ -90,7 +90,7 @@ uint8_t vector_areEqual(Vector V1, Vector V2);
 */
 double vector_length(Vector V)
 {
-  return sqrt( pow(V[vx], 2) + pow(V[vy], 2) + pow(V[vz], 2) )
+  return sqrt( pow(V[vx], 2) + pow(V[vy], 2) + pow(V[vz], 2) );
 }
 
 /**
@@ -246,6 +246,7 @@ uint8_t vector_delete(Vector V)
   // Validates indicated vector
   if(V != NULL)
   {
+    // Frees allocated memory
     free(V);
     
     return TRUE;
@@ -264,7 +265,7 @@ uint8_t vector_print(Vector V)
   // Validates indicated vector
   if(V != NULL)
   {
-    printf("(%.03f, %.03f, %.03f)", V[vx], V[vy], V[vz]);
+    printf("(%.03f, %.03f, %.03f)\n", V[vx], V[vy], V[vz]);
     
     return TRUE;
   }
