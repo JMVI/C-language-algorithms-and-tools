@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/24/2020
+ * Last modified : 08/05/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -108,7 +108,7 @@ uint8_t dlist_addItem(DList dll, Data val)
     else
     {
       dll->last->next = newNode;
-      newNode->previous = dll->last
+      newNode->previous = dll->last;
     }
   
     dll->last = newNode;    // Last element in list
@@ -130,7 +130,7 @@ uint8_t dlist_addItem(DList dll, Data val)
         val: Value
 @retval TRUE if value was correctly read, FALSE otherwise
 */
-uint8_t dlist_readItem(LList dll, uint16_t index, Data* val)
+uint8_t dlist_readItem(DList dll, uint16_t index, Data* val)
 {
   Node selNode = NULL;        // Selector
   uint16_t i = 0;             // Iterator
@@ -177,7 +177,7 @@ uint8_t dlist_readItem(LList dll, uint16_t index, Data* val)
         val: Value
 @retval TRUE if value was correctly updated, FALSE otherwise
 */
-uint8_t llist_updateItem(LList ll, uint16_t index, Data val)
+uint8_t dlist_updateItem(DList dll, uint16_t index, Data val)
 {
   Node selNode = NULL;      // Selector
   uint16_t i = 0;           // Iterator
@@ -239,7 +239,7 @@ uint8_t dlist_deleteItem(DList dll, uint16_t index)
       selAux = dll->first;
       dll->first = dll->first->next;
     }
-    else if(index == size - 1)
+    else if(index == dll->size - 1)
     {
       // Deletes last item
       selAux = dll->last;
@@ -273,24 +273,13 @@ uint8_t dlist_deleteItem(DList dll, uint16_t index)
         {
           selNode = selNode->previous;
         }
-
-
-      selAux = selNode->next;
-      
-      if(index == ll->size - 1)
-      {
-        ll->last = selNode;
-        ll->last->next = NULL;
-      }
-      else
-      {
-        selNode->next = selNode->next->next;
-      }
         
+        selAux = selNode->previous;
+      } 
     }
     
     free(selAux);     // Frees allocated memory of selected node
-    ll->size--;       // Decreases size
+    dll->size--;      // Decreases size
     
     return TRUE;
   }
