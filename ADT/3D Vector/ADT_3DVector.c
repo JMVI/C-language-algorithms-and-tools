@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/26/2020
+ * Last modified : 08/09/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -221,19 +221,26 @@ Vector vector_crossProduct(Vector V1, Vector V2)
 @brief  Calculates the angle between two vectors
 @param  V1: Pointer to first vector
         V2: Pointer to second vector
+        arg: Unit of angle (radians / degrees)
 @retval Pointer to cross product vector
 */
-double vector_angle(Vector V1, Vector V2)
+double vector_angle(Vector V1, Vector V2, Angle_Unit arg)
 {
-  double angleD = 0;
+  double cosTheta = 0, Theta = 0;
   
   // Validates indicated vectors
   if(V1 != NULL || V2 != NULL)
   {
-    angleD = V_Hdlr.dot(V1, V2) / ( (V_Hdlr.length(V1))*(V_Hdlr.length(V2)) );
+    cosTheta = V_Hdlr.dot(V1, V2) / ( (V_Hdlr.length(V1))*(V_Hdlr.length(V2)) );
+    Theta = acos(cosTheta);
   }
   
-  return angleD;
+  if(arg == RAD)
+  {
+    return Theta;
+  }
+  
+  return 180*Theta/3.1416;
 }
 
 /**
