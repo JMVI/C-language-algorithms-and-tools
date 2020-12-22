@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 08/05/2020
+ * Last modified : 12/03/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -172,7 +172,7 @@ uint8_t dlist_readItem(DList dll, uint16_t index, Data* val)
 
 /**
 @brief  Updates an element of the list
-@param  ll: Pointer to list
+@param  dll: Pointer to list
         index: Element index
         val: Value
 @retval TRUE if value was correctly updated, FALSE otherwise
@@ -238,6 +238,7 @@ uint8_t dlist_deleteItem(DList dll, uint16_t index)
       // Deletes first item
       selAux = dll->first;
       dll->first = dll->first->next;
+      dll->first->previous = NULL;
     }
     else if(index == dll->size - 1)
     {
@@ -261,6 +262,8 @@ uint8_t dlist_deleteItem(DList dll, uint16_t index)
         }
         
         selAux = selNode->next;
+        selNode->next = selAux->next;
+        selAux->next->previous = selNode;
         
       }
       else
@@ -269,12 +272,15 @@ uint8_t dlist_deleteItem(DList dll, uint16_t index)
         selNode = dll->last;
         
         // Finds next node
-        for(i = dll->size - 1; i > index; i--)
+        for(i = dll->size - 1; i > index + 1; i--)
         {
           selNode = selNode->previous;
         }
         
         selAux = selNode->previous;
+        selNode->previous = selAux->previous;
+        selAux->previous->next = selNode;
+
       } 
     }
     
@@ -366,4 +372,3 @@ uint8_t dlist_print(DList dll)
   
   return FALSE;
 }
-
