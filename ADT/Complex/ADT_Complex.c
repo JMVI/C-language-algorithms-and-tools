@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
  * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
- * Filename      : ADT_Complex.h
+ * Filename      : ADT_Complex.c
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
@@ -9,86 +9,59 @@
  * -----------------------------------------------------------------------------
  */
 
-#ifndef _COMPLEX_H_
-#define _COMPLEX_H_
-
 //----------------------------------------------------------------------------//
 //                                Header files                                //
 //----------------------------------------------------------------------------//
 
-#include<stdint.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-
-//----------------------------------------------------------------------------//
-//                                  Macros                                    //
-//----------------------------------------------------------------------------//
-
-// Bool data type
-#define TRUE      (uint8_t)(1)
-#define FALSE     (uint8_t)(0)
+#include"ADT_Complex.h"
 
 //----------------------------------------------------------------------------//
 //                            General definitions                             //
 //----------------------------------------------------------------------------//
 
-// Complex components
-typedef enum
+// Complex handler
+t_ComplexHandler Cmplx_Hdlr
 {
-  RE = 0,   // Real component
-  IM,       // Imaginary component
+  complex_create,          // Create complex
+  complex_isNull,          // Is a null complex?
+  complex_areEqual,        // Z1 == Z2?
+  complex_getModulus,      // Get modulus
+  complex_getArgument,     // Get argument
+  complex_update,          // Update element
+  complex_conjugate,       // Conjugate
+  complex_sum,             // Complex sum
+  complex_product,         // Complex product
+  complex_scalar,          // Scalar product
+  complex_division,        // Complex division
+  complex_sqrt,            // Square root
+  complex_nthroot,         // Nth complex root
+  complex_delete           // Delete complex
+};
+
+
+//----------------------------------------------------------------------------//
+//                              Private functions                             //
+//----------------------------------------------------------------------------//
+
+/**
+@brief  Calculates the complex number modulus
+@param  Z: Complex number
+@retval Modulus value
+*/
+double vector_modulus(Complex Z)
+{
+  return 0;
 }
-Component;
 
-// Argument angle type
-typedef enum
+/**
+@brief  Calculates the complex number argument
+@param  Z: Complex number
+@retval Argument value
+*/
+double vector_argument(Complex Z)
 {
-  RAD = 0,   // Radians
-  DEG,       // Degrees
+  return 0;
 }
-Angle_Unit;
-
-// Print parameters
-typedef enum
-{
-  CARTESIAN = 0,  // Cartesian form
-  POLAR,          // Polar form
-  EULER           // Euler's notation
-}
-PRINT_FORMAT;
-
-typedef struct
-{
-  double Real;   // Real part
-  double Imag;   // Imaginary part
-  double Mod;    // Modulus
-  double Arg;    // Argument
-}
-t_complex;
-
-typedef t_complex Complex;
-
-// Complex number handler
-typedef struct
-{
-  Complex  (*init)(double Real, double Imag);              // Create complex
-  uint8_t  (*isNull)(Complex Z);                           // Is a null complex?
-  uint8_t  (*areEqual)(Complex Z1, Complex Z2);            // Z1 == Z2?
-  double   (*modulus)(Complex Z);                          // Get modulus
-  double   (*argument)(Complex Z, Angle_Unit arg);         // Get argument
-  uint8_t  (*update)(Complex Z, double val, Component c);  // Update element
-  Complex  (*conjugate)(Complex Z);                        // Conjugate
-  Complex  (*sum)(Complex Z1, Complex Z2);                 // Complex sum
-  Complex  (*product)(Complex Z1, Complex Z2);             // Complex product
-  Complex  (*scalar)(Complex Z, double k);                 // Scalar product
-  Complex  (*division)(Complex Z1, Complex Z2);            // Complex division
-  Complex* (*sqrt)(Complex Z)                              // Square root
-  Complex* (*nthroot)(Complex Z, uint8_t n)                // Nth complex root
-  uint8_t  (*del)(Complex Z);                              // Delete complex
-}t_ComplexHandler;
-
-extern t_ComplexHandler Cmplx_Hdlr;
 
 //----------------------------------------------------------------------------//
 //                              Public functions                              //
@@ -100,14 +73,20 @@ extern t_ComplexHandler Cmplx_Hdlr;
         Imag: Imaginary component
 @retval Pointer to new complex number
 */
-extern Complex complex_create(double Real, double Imag);
+Complex complex_create(double Real, double Imag)
+{
+  return NULL;
+}
 
 /**
 @brief  Verifies if complex is null
 @param  Z: Pointer to complex
 @retval TRUE if complex is null, FALSE otherwise
 */
-extern uint8_t complex_isNull(Complex Z);
+uint8_t complex_isNull(Complex Z)
+{
+  return TRUE;
+}
 
 /**
 @brief  Verifies if Z1 and Z2 are equal
@@ -115,14 +94,20 @@ extern uint8_t complex_isNull(Complex Z);
         Z2: Pointer to second complex
 @retval TRUE if complex numbers are equal, FALSE otherwise
 */
-extern uint8_t complex_areEqual(Complex Z1, Complex Z2);
+uint8_t complex_areEqual(Complex Z1, Complex Z2)
+{
+  return TRUE;
+}
 
 /**
 @brief  Gets modulus of a complex
 @param  Z: Pointer to complex
 @retval Modulus value
 */
-extern double complex_getModulus(Complex Z);
+double complex_getModulus(Complex Z)
+{
+  return 0;
+}
 
 /**
 @brief  Gets argument of a complex
@@ -132,7 +117,10 @@ extern double complex_getModulus(Complex Z);
              - DEG: Argument in degrees
 @retval Argument value
 */
-extern double complex_getArgument(Complex Z, Angle_Unit arg);
+double complex_getArgument(Complex Z, Angle_Unit arg)
+{
+  return 0;
+}
 
 /**
 @brief  Updates a component of introduced complex
@@ -143,14 +131,20 @@ extern double complex_getArgument(Complex Z, Angle_Unit arg);
              - IM: Imaginary component
 @retval TRUE if element was updated, FALSE otherwise
 */
-extern uint8_t complex_update(Complex Z, double val, Component c);
+uint8_t complex_update(Complex Z, double val, Component c)
+{
+  return TRUE;
+}
 
 /**
 @brief  Complex conjugation
 @param  Z: Pointer to complex
 @retval Pointer to conjugated complex
 */
-extern Complex complex_conjugate(Complex Z);
+Complex complex_conjugate(Complex Z)
+{
+  return NULL;
+}
 
 /**
 @brief  Obtains the algebraic sum of two complex numbers
@@ -158,7 +152,10 @@ extern Complex complex_conjugate(Complex Z);
         Z2: Pointer to second complex
 @retval Pointer to sum complex
 */
-extern Complex complex_sum(Complex Z1, Complex Z2);
+Complex complex_sum(Complex Z1, Complex Z2)
+{
+  return NULL;
+}
 
 /**
 @brief  Obtains the product of two complex numbers
@@ -166,7 +163,10 @@ extern Complex complex_sum(Complex Z1, Complex Z2);
         Z2: Pointer to second complex
 @retval Complex product
 */
-extern Complex complex_product(Complex Z1, Complex Z2);
+Complex complex_product(Complex Z1, Complex Z2)
+{
+  return NULL;
+}
 
 /**
 @brief  Obtains the product of a complex number and a scalar factor
@@ -174,7 +174,10 @@ extern Complex complex_product(Complex Z1, Complex Z2);
         k: Scalar factor
 @retval Pointer to scalated complex
 */
-extern Complex complex_scalar(Complex Z, double k);
+Complex complex_scalar(Complex Z, double k)
+{
+  return NULL;
+}
 
 /**
 @brief  Obtains the division of two complex numbers
@@ -182,28 +185,40 @@ extern Complex complex_scalar(Complex Z, double k);
         Z2: Pointer to second complex
 @retval Complex division
 */
-extern Complex complex_division(Complex Z1, Complex Z2);
+Complex complex_division(Complex Z1, Complex Z2)
+{
+  return NULL;
+}
 
 /**
 @brief  Calculates the square root of a complex number
 @param  Z: Pointer to complex
 @retval Array to complex results
 */
-extern Complex* complex_sqrt(Complex Z);
+Complex* complex_sqrt(Complex Z)
+{
+  return NULL;
+}
 
 /**
 @brief  Calculates the Nth root of a complex number
 @param  Z: Pointer to complex
 @retval Array to complex results
 */
-extern Complex* complex_nthroot(Complex Z, uint8_t n);
+Complex* complex_nthroot(Complex Z, uint8_t n)
+{
+  return NULL;
+}
 
 /**
 @brief  Deletes complex and frees allocated memory
 @param  Z: Pointer to complex
 @retval TRUE if complex was deleted with no error, FALSE otherwise
 */
-extern uint8_t complex_delete(Complex Z, uint8_t n);
+uint8_t complex_delete(Complex Z, uint8_t n)
+{
+  return TRUE;
+}
 
 /**
 @brief  Prints complex number on screen
@@ -214,7 +229,8 @@ extern uint8_t complex_delete(Complex Z, uint8_t n);
                 - EULER: Euler's formula
 @retval TRUE if complex was printed with no error, FALSE otherwise
 */
-extern uint8_t complex_print(Complex Z, PRINT_FORMAT format);
-
-#endif
+uint8_t complex_print(Complex Z, PRINT_FORMAT format)
+{
+  return TRUE;
+}
 
