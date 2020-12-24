@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 08/09/2020
+ * Last modified : 12/24/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -140,7 +140,7 @@ Vector vector_sum(Vector V1, Vector V2)
   Vector newV = NULL;
   
   // Validates indicated vectors
-  if(V1 != NULL || V2 != NULL)
+  if(V1 != NULL && V2 != NULL)
   {
     newV = V_Hdlr.init( V1[vx] + V2[vx] , V1[vy] + V2[vy], V1[vz] + V2[vz] );
   }
@@ -178,7 +178,7 @@ double vector_dotProduct(Vector V1, Vector V2)
   double dotP = 0;
   
   // Validates indicated vectors
-  if(V1 != NULL || V2 != NULL)
+  if(V1 != NULL && V2 != NULL)
   {
     dotP = V1[vx]*V2[vx] + V1[vy]*V2[vy] + V1[vz]*V2[vz];
   }
@@ -197,7 +197,7 @@ Vector vector_crossProduct(Vector V1, Vector V2)
   Vector newV = NULL;
   
   // Validates indicated vectors
-  if(V1 != NULL || V2 != NULL)
+  if(V1 != NULL && V2 != NULL)
   {
     // Initializes null vector
     newV = V_Hdlr.init(0, 0, 0);
@@ -229,7 +229,7 @@ double vector_angle(Vector V1, Vector V2, Angle_Unit arg)
   double cosTheta = 0, Theta = 0;
   
   // Validates indicated vectors
-  if(V1 != NULL || V2 != NULL)
+  if(V1 != NULL && V2 != NULL)
   {
     cosTheta = V_Hdlr.dot(V1, V2) / ( (V_Hdlr.length(V1))*(V_Hdlr.length(V2)) );
     Theta = acos(cosTheta);
