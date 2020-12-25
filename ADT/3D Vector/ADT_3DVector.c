@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/24/2020
+ * Last modified : 12/25/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -49,6 +49,12 @@ t_VectorHandler V_Hdlr =
 Vector vector_create(Data Vx, Data Vy, Data Vz)
 {
   Vector V = (Data*)calloc(VECTOR_DIM, sizeof(Data)); // Memory allocation
+  
+  // Error in memory allocation
+  if(V == NULL)
+  {
+    return V;
+  }
   
   V[vx] = Vx;  // X coordinate
   V[vy] = Vy;  // Y coordinate
@@ -108,18 +114,19 @@ uint8_t vector_update(Vector V, Data k, Coordinate C)
     switch(C)
     {
       case vx:
-        V[vx] = k;  // X coordinate
+        V[vx] = k;     // Update X coordinate
         break;
         
       case vy:
-        V[vy] = k;  // Y coordinate
+        V[vy] = k;     // Update Y coordinate
         break;
       
       case vz:
-        V[vz] = k;  // Z coordinate
+        V[vz] = k;     // Update Z coordinate
         break;
         
       default:
+        return FALSE;  // Invalid arguments
         break;
     }
     
