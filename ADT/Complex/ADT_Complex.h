@@ -29,6 +29,9 @@
 #define TRUE      (uint8_t)(1)
 #define FALSE     (uint8_t)(0)
 
+// Pi
+#define PI (double)(3.141592653)
+
 //----------------------------------------------------------------------------//
 //                            General definitions                             //
 //----------------------------------------------------------------------------//
@@ -177,7 +180,7 @@ extern Complex complex_product(Complex Z1, Complex Z2);
 extern Complex complex_scalar(Complex Z, double k);
 
 /**
-@brief  Obtains the division of two complex numbers
+@brief  Obtains the division (Z1/Z2) of two complex numbers
 @param  Z1: Pointer to first complex
         Z2: Pointer to second complex
 @retval Complex division

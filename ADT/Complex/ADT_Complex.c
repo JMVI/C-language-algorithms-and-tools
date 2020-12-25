@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/24/2020
+ * Last modified : 12/25/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -46,21 +46,39 @@ t_ComplexHandler Cmplx_Hdlr
 /**
 @brief  Calculates the complex number modulus
 @param  Z: Complex number
-@retval Modulus value
+@retval none
 */
-double vector_modulus(Complex Z)
+void vector_modulus(Complex Z)
 {
-  return 0;
+  if(Z != NULL)
+  {
+    Z->Mod = sqrt( pow(Z->Real, 2) + pow(Z->Imag, 2) );
+  }
 }
 
 /**
 @brief  Calculates the complex number argument
 @param  Z: Complex number
-@retval Argument value
+@retval none
+@note Argument is calculated by default in radians
 */
-double vector_argument(Complex Z)
+void vector_argument(Complex Z)
 {
-  return 0;
+  if(Z != NULL)
+  {
+    if(Z->Real > 0 && Z->Imag != 0)
+    {
+      Z->Arg = 2 * atan(Z->Imag / (Z->Mod + Z->Real) )
+    }
+    else if(Z->Real < 0 && Z->Imag == 0)
+    {
+      Z->Arg = PI;
+    }
+    else
+    {
+      Z->Arg = 0;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------//
@@ -75,7 +93,21 @@ double vector_argument(Complex Z)
 */
 Complex complex_create(double Real, double Imag)
 {
-  return NULL;
+  Complex Z = (Complex)malloc( sizeof(t_complex) ); // Memory allocation
+  
+  // Error in memory allocation
+  if(Z == NULL)
+  {
+    return Z;
+  }
+  
+  Z->Real = Real;      // Real part
+  Z->Imag = Imag;      // Imaginary part
+  
+  vector_modulus(Z);   // Modulus
+  vector_argument(Z);  // Argument
+  
+  return Z;
 }
 
 /**
@@ -85,7 +117,7 @@ Complex complex_create(double Real, double Imag)
 */
 uint8_t complex_isNull(Complex Z)
 {
-  return TRUE;
+  return (Z->Mod == 0) ? TRUE : FALSE;
 }
 
 /**
@@ -96,17 +128,18 @@ uint8_t complex_isNull(Complex Z)
 */
 uint8_t complex_areEqual(Complex Z1, Complex Z2)
 {
-  return TRUE;
+  return (Z1->Real == Z2->Real && Z1->Imag == Z2->Imag) ? TRUE : FALSE;
 }
 
 /**
 @brief  Gets modulus of a complex
 @param  Z: Pointer to complex
 @retval Modulus value
+@note Previous validation of input argument is expected before function call
 */
 double complex_getModulus(Complex Z)
 {
-  return 0;
+  return Z->Mod;
 }
 
 /**
@@ -116,10 +149,18 @@ double complex_getModulus(Complex Z)
              - RAD: Argument in radians
              - DEG: Argument in degrees
 @retval Argument value
+@note Previous validation of input arguments is expected before function call
 */
 double complex_getArgument(Complex Z, Angle_Unit arg)
 {
-  return 0;
+  if(arg == DEG)
+  {
+    // Return value in degrees
+    return 180 * Z->Arg / PI;
+  }
+  
+  // Return value in radians
+  return Z->Arg;
 }
 
 /**
@@ -133,7 +174,26 @@ double complex_getArgument(Complex Z, Angle_Unit arg)
 */
 uint8_t complex_update(Complex Z, double val, Component c)
 {
-  return TRUE;
+  if(Z != NULL)
+  {
+    switch(c)
+    {
+      case RE:
+        Z->Real = val;   // Update real part
+        break;
+        
+      case IM:
+        Z->Imag = val;   // Update imaginary part
+        break;
+        
+      default:
+        return FALSE;    // Invalid arguments
+    }
+  
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 /**
@@ -143,7 +203,14 @@ uint8_t complex_update(Complex Z, double val, Component c)
 */
 Complex complex_conjugate(Complex Z)
 {
-  return NULL;
+  Complex Z_conj = NULL;
+  
+  if(Z != NULL)
+  {
+    Z_conj = Cmplx_Hdlr.init(Z->Real, -Z->Imag);
+  }
+  
+  return Z_conj;
 }
 
 /**
@@ -154,7 +221,22 @@ Complex complex_conjugate(Complex Z)
 */
 Complex complex_sum(Complex Z1, Complex Z2)
 {
-  return NULL;
+  Complex Z_sum = NULL;
+  double Z_sum_real = 0, Z_sum_imag = 0;
+  
+  if(Z1 != NULL && Z2 != NULL)
+  {
+    // Real part
+    Z_sum_real = Z1->Real + Z2->Real;
+    
+    // Imaginary part
+    Z_sum_imag = Z1->Imag + Z2->Imag;
+    
+    // Initialize complex
+    Z_sum = Cmplx_Hdlr.init(Z_sum_real, Z_sum_imag);
+  }
+  
+  return Z_sum;
 }
 
 /**
@@ -165,7 +247,22 @@ Complex complex_sum(Complex Z1, Complex Z2)
 */
 Complex complex_product(Complex Z1, Complex Z2)
 {
-  return NULL;
+  Complex Z_prod = NULL;
+  double Z_prod_real = 0, Z_prod_imag = 0;
+  
+  if(Z1 != NULL && Z2 != NULL)
+  {
+    // Real part
+    Z_prod_real = Z1->Real * Z2->Real - Z1->Imag * Z2->Imag;
+    
+    // Imaginary part
+    Z_prod_imag = Z1->Real * Z2->Imag + Z1->Imag * Z2->Real;
+    
+    // Initialize complex
+    Z_prod = Cmplx_Hdlr.init(Z_prod_real, Z_prod_imag);
+  }
+  
+  return Z_prod;
 }
 
 /**
@@ -176,18 +273,45 @@ Complex complex_product(Complex Z1, Complex Z2)
 */
 Complex complex_scalar(Complex Z, double k)
 {
-  return NULL;
+  Complex Z_scl = NULL;
+  
+  if(Z != NULL)
+  {
+    // Initialize complex
+    Z_scl = Cmplx_Hdlr.init(k * Z->Real, k * Z->Imag);
+  }
+  
+  return Z_scl;
 }
 
 /**
-@brief  Obtains the division of two complex numbers
+@brief  Obtains the division (Z1/Z2) of two complex numbers
 @param  Z1: Pointer to first complex
         Z2: Pointer to second complex
 @retval Complex division
 */
 Complex complex_division(Complex Z1, Complex Z2)
 {
-  return NULL;
+  Complex Z_div = NULL;
+  double Z_div_real = 0, Z_div_imag = 0;
+  
+  if(Z1 != NULL && Z2 != NULL)
+  {
+    // Verifies if divisor Z2 is a null complex
+    if( !Cmplx_Hdlr.isNull(Z2) )
+    {
+      // Real part
+      Z_div_real = (Z1->Real * Z2->Real + Z1->Imag * Z2->Imag)/pow(Z2->Mod, 2);
+      
+      // Imaginary part
+      Z_div_imag = (Z1->Imag * Z2->Real - Z1->Real * Z2->Imag)/pow(Z2->Mod, 2);
+      
+      // Initialize complex
+      Z_div = Cmplx_Hdlr.init(Z_div_real, Z_div_imag);
+    }
+  }
+  
+  return Z_div;
 }
 
 /**
