@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/24/2020
+ * Last modified : 12/26/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -42,7 +42,7 @@ typedef enum
   RE = 0,   // Real component
   IM,       // Imaginary component
 }
-Component;
+COMPONENT;
 
 // Argument angle type
 typedef enum
@@ -50,7 +50,7 @@ typedef enum
   RAD = 0,   // Radians
   DEG,       // Degrees
 }
-Angle_Unit;
+ANGLE_UNIT;
 
 // Print parameters
 typedef enum
@@ -61,7 +61,7 @@ typedef enum
 }
 PRINT_FORMAT;
 
-typedef struct
+typedef struct complex
 {
   double Real;   // Real part
   double Imag;   // Imaginary part
@@ -70,25 +70,27 @@ typedef struct
 }
 t_complex;
 
-typedef t_complex Complex;
+typedef t_complex* Complex;
 
 // Complex number handler
 typedef struct
 {
-  Complex  (*init)(double Real, double Imag);              // Create complex
-  uint8_t  (*isNull)(Complex Z);                           // Is a null complex?
-  uint8_t  (*areEqual)(Complex Z1, Complex Z2);            // Z1 == Z2?
-  double   (*modulus)(Complex Z);                          // Get modulus
-  double   (*argument)(Complex Z, Angle_Unit arg);         // Get argument
-  uint8_t  (*update)(Complex Z, double val, Component c);  // Update element
-  Complex  (*conjugate)(Complex Z);                        // Conjugate
-  Complex  (*sum)(Complex Z1, Complex Z2);                 // Complex sum
-  Complex  (*product)(Complex Z1, Complex Z2);             // Complex product
-  Complex  (*scalar)(Complex Z, double k);                 // Scalar product
-  Complex  (*division)(Complex Z1, Complex Z2);            // Complex division
-  Complex* (*sqrt)(Complex Z)                              // Square root
-  Complex* (*nthroot)(Complex Z, uint8_t n)                // Nth complex root
-  uint8_t  (*del)(Complex Z);                              // Delete complex
+  Complex  (*init)(double Real, double Imag);             // Create complex
+  uint8_t  (*isNull)(Complex Z);                          // Is a null complex?
+  uint8_t  (*areEqual)(Complex Z1, Complex Z2);           // Z1 == Z2?
+  double   (*modulus)(Complex Z);                         // Get modulus
+  double   (*argument)(Complex Z, ANGLE_UNIT arg);        // Get argument
+  uint8_t  (*update)(Complex Z, double val, COMPONENT c); // Update element
+  Complex  (*conjugate)(Complex Z);                       // Conjugate
+  Complex  (*sum)(Complex Z1, Complex Z2);                // Complex sum
+  Complex  (*product)(Complex Z1, Complex Z2);            // Complex product
+  Complex  (*scalar)(Complex Z, double k);                // Scalar product
+  Complex  (*division)(Complex Z1, Complex Z2);           // Complex division
+  Complex  (*inv)(Complex Z);                             // Complex reciprocal
+  Complex  (*pow)(Complex Z, double n)                    // Real exponential
+  Complex* (*sqrt)(Complex Z)                             // Square root
+  Complex* (*nthroot)(Complex Z, uint8_t n)               // Nth complex root
+  uint8_t  (*del)(Complex Z);                             // Delete complex
 }t_ComplexHandler;
 
 extern t_ComplexHandler Cmplx_Hdlr;
@@ -135,7 +137,7 @@ extern double complex_getModulus(Complex Z);
              - DEG: Argument in degrees
 @retval Argument value
 */
-extern double complex_getArgument(Complex Z, Angle_Unit arg);
+extern double complex_getArgument(Complex Z, ANGLE_UNIT arg);
 
 /**
 @brief  Updates a component of introduced complex
@@ -146,7 +148,7 @@ extern double complex_getArgument(Complex Z, Angle_Unit arg);
              - IM: Imaginary component
 @retval TRUE if element was updated, FALSE otherwise
 */
-extern uint8_t complex_update(Complex Z, double val, Component c);
+extern uint8_t complex_update(Complex Z, double val, COMPONENT c);
 
 /**
 @brief  Complex conjugation
@@ -188,6 +190,21 @@ extern Complex complex_scalar(Complex Z, double k);
 extern Complex complex_division(Complex Z1, Complex Z2);
 
 /**
+@brief  Obtains the reciprocal (1/Z) of a complex number
+@param  Z: Pointer to complex
+@retval Complex reciprocal
+*/
+extern Complex complex_reciprocal(Complex Z);
+   
+/**
+@brief  Obtains the exponenciation (Z^n) of a complex number
+@param  Z: Pointer to complex
+        n: Real exponential
+@retval Complex power
+*/
+extern Complex complex_power(Complex Z, double n);
+  
+/**
 @brief  Calculates the square root of a complex number
 @param  Z: Pointer to complex
 @retval Array to complex results
@@ -216,6 +233,7 @@ extern uint8_t complex_delete(Complex Z, uint8_t n);
                 - POLAR: Polar form
                 - EULER: Euler's formula
 @retval TRUE if complex was printed with no error, FALSE otherwise
+@note Argument is printed in degrees by default in polar form
 */
 extern uint8_t complex_print(Complex Z, PRINT_FORMAT format);
 

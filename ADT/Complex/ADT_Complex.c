@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/25/2020
+ * Last modified : 12/26/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -33,6 +33,8 @@ t_ComplexHandler Cmplx_Hdlr
   complex_product,         // Complex product
   complex_scalar,          // Scalar product
   complex_division,        // Complex division
+  complex_reciprocal       // Complex reciprocal
+  complex_power            // Real exponential
   complex_sqrt,            // Square root
   complex_nthroot,         // Nth complex root
   complex_delete           // Delete complex
@@ -48,7 +50,7 @@ t_ComplexHandler Cmplx_Hdlr
 @param  Z: Complex number
 @retval none
 */
-void vector_modulus(Complex Z)
+void complex_modulus(Complex Z)
 {
   if(Z != NULL)
   {
@@ -62,7 +64,7 @@ void vector_modulus(Complex Z)
 @retval none
 @note Argument is calculated by default in radians
 */
-void vector_argument(Complex Z)
+void complex_argument(Complex Z)
 {
   if(Z != NULL)
   {
@@ -81,6 +83,24 @@ void vector_argument(Complex Z)
   }
 }
 
+/**
+@brief Custom signum function. Returns the sign of introduced value
+@param: val: Numerical value
+@retval (-1) if val < 0, (0) if val == 0, (1) if val > 0
+*/
+int8_t sgn(double val)
+{
+  if(val < 0)
+  {
+    return -1;
+  }
+  else if(val > 0)
+  {
+    return 1;
+  }
+  
+  return 0;
+}
 //----------------------------------------------------------------------------//
 //                              Public functions                              //
 //----------------------------------------------------------------------------//
@@ -95,17 +115,14 @@ Complex complex_create(double Real, double Imag)
 {
   Complex Z = (Complex)malloc( sizeof(t_complex) ); // Memory allocation
   
-  // Error in memory allocation
-  if(Z == NULL)
+  if(Z != NULL)
   {
-    return Z;
+    Z->Real = Real;       // Real part
+    Z->Imag = Imag;       // Imaginary part
+    
+    complex_modulus(Z);   // Modulus
+    complex_argument(Z);  // Argument    
   }
-  
-  Z->Real = Real;      // Real part
-  Z->Imag = Imag;      // Imaginary part
-  
-  vector_modulus(Z);   // Modulus
-  vector_argument(Z);  // Argument
   
   return Z;
 }
@@ -315,13 +332,85 @@ Complex complex_division(Complex Z1, Complex Z2)
 }
 
 /**
+@brief  Obtains the reciprocal (1/Z) of a complex number
+@param  Z: Pointer to complex
+@retval Complex reciprocal
+*/
+Complex complex_reciprocal(Complex Z)
+{
+  Complex Z_inv = NULL;
+  double Z_inv_real = 0, Z_inv_imag = 0;
+  
+  if(Z != NULL)
+  {
+    // Verifies if Z is a null complex
+    if( !Cmplx_Hdlr.isNull(Z) )
+    {
+      // Real part
+      Z_inv_real = (Z->Real) / pow(Z->Mod, 2);
+      
+      // Imaginary part
+      Z_inv_imag = (Z->Imag) / pow(Z->Mod, 2);
+      
+      // Initialize complex
+      Z_inv = Cmplx_Hdlr.init(Z_inv_real, Z_inv_imag);
+    }
+  }
+  
+  return Z_inv;
+}
+
+/**
+@brief  Obtains the exponenciation (Z^n) of a complex number
+@param  Z: Pointer to complex
+        n: Real exponential
+@retval Complex power
+*/
+Complex complex_power(Complex Z, double n)
+{
+  Complex Z_pow = NULL;
+  double Z_pow_real = 0, Z_pow_imag = 0;
+  
+  if(Z != NULL)
+  {
+    // Real part
+    Z_pow_real = pow(Z->Mod, n) * cos(n * Z->Arg);
+    
+    // Imaginary part
+    Z_pow_imag = pow(Z->Mod, n) * sin(n * Z->Arg);;
+    
+    // Initialize complex
+    Z_pow = Cmplx_Hdlr.init(Z_pow_real, Z_pow_imag);
+  }
+  
+  return Z_pow;
+}
+
+/**
 @brief  Calculates the square root of a complex number
 @param  Z: Pointer to complex
 @retval Array to complex results
 */
 Complex* complex_sqrt(Complex Z)
 {
-  return NULL;
+  // TODO: Review memory allocation for Complex array
+  
+  Complex* Z_roots = NULL;  // Complex roots
+  
+  Z_roots = (Complex*)calloc( 2, sizeof(t_complex) ); // Memory allocation
+  
+  if(Z_roots != NULL)
+  {
+    // First complex root
+    Z_roots[0]->Real = sqrt( (Z->Real + Z->Mod)/2 );
+    Z_roots[0]->Imag = sgn(Z->Imag) * sqrt( (-Z->Real + Z->Mod)/2 );
+    
+    // Second complex root
+    Z_roots[1]->Real = -sqrt( (Z->Real + Z->Mod)/2 );
+    Z_roots[1]->Imag = -sgn(Z->Imag) * sqrt( (-Z->Real + Z->Mod)/2 );
+  }
+  
+  return Z_roots;
 }
 
 /**
@@ -352,9 +441,31 @@ uint8_t complex_delete(Complex Z, uint8_t n)
                 - POLAR: Polar form
                 - EULER: Euler's formula
 @retval TRUE if complex was printed with no error, FALSE otherwise
+@note Argument is printed in degrees by default in polar form
 */
 uint8_t complex_print(Complex Z, PRINT_FORMAT format)
 {
+  switch(format)
+  {
+    // Cartesian form
+    case CARTESIAN:
+      printf("%.04f %.04f i", Z->Real, Z->Imag);
+      break;
+    
+    // Polar form
+    case POLAR:
+      printf( "%.04f < %.04f i", Z->Mod, Cmplx_Hdlr.argument(Z, DEG) );
+      break;
+    
+    // Euler's formula
+    case EULER:
+      printf( "%.04f exp(i %.04f) ", Z->Mod, Cmplx_Hdlr.argument(Z, RAD) );
+      break;
+      
+    default:
+      return FALSE;
+  }
+  
   return TRUE;
 }
 
