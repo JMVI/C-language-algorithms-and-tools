@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 08/09/2020
+ * Last modified : 12/26/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -49,7 +49,7 @@ typedef enum
   vy,       // Y coordinate
   vz        // Z coordinate
 }
-Coordinate;
+COORDINATE;
 
 // Vector angle type
 typedef enum
@@ -57,7 +57,7 @@ typedef enum
   RAD = 0,   // Radians
   DEG,       // Degrees
 }
-Angle_Unit;
+ANGLE_UNIT;
 
 // Vector handler
 typedef struct
@@ -66,14 +66,15 @@ typedef struct
   uint8_t (*isNull)(Vector V);                            // Is null vector?
   uint8_t (*areEqual)(Vector V1, Vector V2);              // Are V1 and V2 equal?
   double  (*length)(Vector V);                            // Vector length
-  uint8_t (*update)(Vector V, Data k, Coordinate C);      // Update element
+  uint8_t (*update)(Vector V, Data k, COORDINATE C);      // Update element
   Vector  (*sum)(Vector V1, Vector V2);                   // Vector sum
   Vector  (*scalar)(Data k, Vector V);                    // Scalar product
   double  (*dot)(Vector V1, Vector V2);                   // Dot product
   Vector  (*cross)(Vector V1, Vector V2);                 // Cross product
-  double  (*angle)(Vector V1, Vector V2, Angle_Unit arg); // Angle <(V1,V2)
+  double  (*angle)(Vector V1, Vector V2, ANGLE_UNIT arg); // Angle <(V1,V2)
   uint8_t (*del)(Vector V);                               // Delete vector
-}t_VectorHandler;
+}
+t_VectorHandler;
 
 extern t_VectorHandler V_Hdlr;
 
@@ -119,7 +120,7 @@ extern double vector_length(Vector V);
         C: Type of coordinate
 @retval TRUE if element was updated, FALSE otherwise
 */
-extern uint8_t vector_update(Vector V, Data k, Coordinate C);
+extern uint8_t vector_update(Vector V, Data k, COORDINATE C);
 
 /**
 @brief  Obtains the algebraic sum of two vectors
@@ -160,7 +161,7 @@ extern Vector vector_crossProduct(Vector V1, Vector V2);
         arg: Unit of angle (radians / degrees)
 @retval Pointer to cross product vector
 */
-extern double vector_angle(Vector V1, Vector V2, Angle_Unit arg);
+extern double vector_angle(Vector V1, Vector V2, ANGLE_UNIT arg);
 
 /**
 @brief  Deletes vector and frees allocated memory

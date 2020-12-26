@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/25/2020
+ * Last modified : 12/26/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -50,15 +50,12 @@ Vector vector_create(Data Vx, Data Vy, Data Vz)
 {
   Vector V = (Data*)calloc(VECTOR_DIM, sizeof(Data)); // Memory allocation
   
-  // Error in memory allocation
-  if(V == NULL)
+  if(V != NULL)
   {
-    return V;
+    V[vx] = Vx;  // X coordinate
+    V[vy] = Vy;  // Y coordinate
+    V[vz] = Vz;  // Z coordinate
   }
-  
-  V[vx] = Vx;  // X coordinate
-  V[vy] = Vy;  // Y coordinate
-  V[vz] = Vz;  // Z coordinate
   
   return V;
 }
@@ -106,7 +103,7 @@ double vector_length(Vector V)
         C: Type of coordinate
 @retval TRUE if element was updated, FALSE otherwise
 */
-uint8_t vector_update(Vector V, Data k, Coordinate C)
+uint8_t vector_update(Vector V, Data k, COORDINATE C)
 {
   // Validates indicated vector
   if(V != NULL)
@@ -231,7 +228,7 @@ Vector vector_crossProduct(Vector V1, Vector V2)
         arg: Unit of angle (radians / degrees)
 @retval Pointer to cross product vector
 */
-double vector_angle(Vector V1, Vector V2, Angle_Unit arg)
+double vector_angle(Vector V1, Vector V2, ANGLE_UNIT arg)
 {
   double cosTheta = 0, Theta = 0;
   
