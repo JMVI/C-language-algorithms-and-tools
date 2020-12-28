@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/26/2020
+ * Last modified : 12/28/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -37,28 +37,30 @@
 typedef int Data;
 
 // List node
-typedef struct t_node
+typedef struct node
 {
   Data            value;    // Stored data
-  struct t_node*  next;     // Pointer to next element
-  struct t_node*  previous; // Pointer to previous element
-} node;
+  struct node*  next;     // Pointer to next element
+  struct node*  previous; // Pointer to previous element
+}
+t_node;
 
-typedef node* Node;
+typedef t_node* Node;
 
 // Doubly linked list
-typedef struct t_list
+typedef struct list
 {
   uint16_t size;       // List size
   uint16_t maxSize;    // Max. Size
   Node     first;      // First element
   Node     last;       // Last element
-} linked_list;
+} 
+t_linked_list;
 
-typedef linked_list* DList;
+typedef t_linked_list* DList;
 
 // List handler
-typedef struct
+typedef struct list_handler
 {
   DList   (*init)(uint16_t maxS);                         // Create linked list
   uint8_t (*isEmpty)(DList dll);                          // Is list empty?
@@ -69,7 +71,8 @@ typedef struct
   uint8_t (*del)(DList dll, uint16_t index);              // Delete element
   uint8_t (*clear)(DList dll);                            // Clear list
   uint8_t (*erase)(DList dll);                            // Erase list
-}t_DListHandler;
+}
+t_DListHandler;
 
 extern t_DListHandler DList_Hdlr;
 

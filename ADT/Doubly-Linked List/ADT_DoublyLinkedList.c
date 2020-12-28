@@ -6,7 +6,7 @@
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/03/2020
+ * Last modified : 12/28/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -45,11 +45,15 @@ t_DListHandler DList_Hdlr =
 */
 DList dlist_createLinkedList(uint16_t maxS)
 {
-  DList newList = (DList)malloc(sizeof(linked_list)); // Memory allocation
-  newList->size = 0;                                  // Initializes empty list
-  newList->first = NULL;                              // Initial first element
-  newList->last = NULL;                               // Initial last element
-  newList->maxSize = maxS;                            // Fix max. size
+  DList newList = (DList)malloc(sizeof(t_linked_list)); // Memory allocation
+  
+  if(newList != NULL)
+  {
+    newList->size = 0;             // Initializes empty list
+    newList->first = NULL;         // Initial first element
+    newList->last = NULL;          // Initial last element
+    newList->maxSize = maxS;       // Fix max. size
+  }
 
   return newList;
 }
@@ -82,7 +86,7 @@ uint8_t dlist_isFull(DList dll)
 */
 uint8_t dlist_addItem(DList dll, Data val)
 {
-  Node newNode = (Node)malloc(sizeof(node)); // Memory allocation for node
+  Node newNode = (Node)malloc(sizeof(t_node)); // Memory allocation for node
   
   // Validates memory allocation
   if(newNode == NULL)

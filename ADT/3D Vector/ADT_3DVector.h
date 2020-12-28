@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for 3D Vectors.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/26/2020
+ * Last modified : 12/28/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -60,7 +60,7 @@ typedef enum
 ANGLE_UNIT;
 
 // Vector handler
-typedef struct
+typedef struct vector_handler
 {
   Vector  (*init)(Data Vx, Data Vy, Data Vz);             // Create 3D-Vector
   uint8_t (*isNull)(Vector V);                            // Is null vector?
