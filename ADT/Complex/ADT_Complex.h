@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/26/2020
+ * Last modified : 12/28/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -73,7 +73,7 @@ t_complex;
 typedef t_complex* Complex;
 
 // Complex number handler
-typedef struct
+typedef struct complex_handler
 {
   Complex  (*init)(double Real, double Imag);             // Create complex
   uint8_t  (*isNull)(Complex Z);                          // Is a null complex?
@@ -87,11 +87,13 @@ typedef struct
   Complex  (*scalar)(Complex Z, double k);                // Scalar product
   Complex  (*division)(Complex Z1, Complex Z2);           // Complex division
   Complex  (*inv)(Complex Z);                             // Complex reciprocal
-  Complex  (*pow)(Complex Z, double n)                    // Real exponential
+  Complex  (*pow)(Complex Z, double n);                   // Real exponential
+  Complex  (*exp)(Complex Z);                             // Natural exponential
   Complex* (*sqrt)(Complex Z)                             // Square root
   Complex* (*nthroot)(Complex Z, uint8_t n)               // Nth complex root
   uint8_t  (*del)(Complex Z);                             // Delete complex
-}t_ComplexHandler;
+}
+t_ComplexHandler;
 
 extern t_ComplexHandler Cmplx_Hdlr;
 
@@ -197,12 +199,19 @@ extern Complex complex_division(Complex Z1, Complex Z2);
 extern Complex complex_reciprocal(Complex Z);
    
 /**
-@brief  Obtains the exponenciation (Z^n) of a complex number
+@brief  Obtains the exponentiation (Z^n) of a complex number
 @param  Z: Pointer to complex
         n: Real exponential
 @retval Complex power
 */
 extern Complex complex_power(Complex Z, double n);
+
+/**
+@brief  Obtains the natural exponential function (e^Z) of a complex number
+@param  Z: Pointer to complex
+@retval Complex power
+*/
+extern Complex complex_exp(Complex Z);
   
 /**
 @brief  Calculates the square root of a complex number
@@ -223,7 +232,7 @@ extern Complex* complex_nthroot(Complex Z, uint8_t n);
 @param  Z: Pointer to complex
 @retval TRUE if complex was deleted with no error, FALSE otherwise
 */
-extern uint8_t complex_delete(Complex Z, uint8_t n);
+extern uint8_t complex_delete(Complex Z);
 
 /**
 @brief  Prints complex number on screen
