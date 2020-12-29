@@ -492,7 +492,7 @@ Complex complex_sine(Complex Z)
   
   if(Z != NULL)
   {
-     // Calculates numerator
+    // Calculates numerator
     Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
                              sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
     
@@ -535,7 +535,7 @@ Complex complex_cosine(Complex Z)
   
   if(Z != NULL)
   {
-     // Calculates numerator
+    // Calculates numerator
     Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) , 
                              sin(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) );
     
@@ -544,7 +544,7 @@ Complex complex_cosine(Complex Z)
       return NULL;
     }
     
-    // Calculates complex sine
+    // Calculates complex cosine
     Z_cosine = Cmplx_Hdlr.scalar(Z_num, 0.5);
     
     // Frees allocated memory for auxiliary variable
@@ -567,7 +567,7 @@ Complex complex_tangent(Complex Z)
   
   if(Z != NULL)
   {
-     // Calculates numerator
+    // Calculates numerator
     Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
                              sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
     
@@ -606,7 +606,41 @@ Complex complex_tangent(Complex Z)
 */
 Complex complex_cosecant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;        // Numerator
+  Complex Z_den = NULL;        // Denominator
+  Complex Z_cosecant = NULL;   // Cosecant
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.scalar(i, 2);
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex sine
+    Z_cosecant = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_cosecant;
 }
 
 /**
@@ -616,7 +650,41 @@ Complex complex_cosecant(Complex Z)
 */
 Complex complex_secant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;      // Numerator
+  Complex Z_den = NULL;      // Denominator
+  Complex Z_secant = NULL;   // Secant
+  
+  if(Z != NULL)
+  {
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) );
+    
+    if(Z_den == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.inv(Z_den);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for denominator
+      Cmplx_Hdlr.del(Z_den);
+      
+      return NULL;
+    }
+    
+    // Calculates complex secant
+    Z_secant = Cmplx_Hdlr.scalar(Z_num, 2);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_cosine;
 }
 
 /**
@@ -626,7 +694,42 @@ Complex complex_secant(Complex Z)
 */
 Complex complex_cotangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;         // Numerator
+  Complex Z_den = NULL;         // Denominator
+  Complex Z_cotangent = NULL;   // Cotangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( sin(Z->Real) * ( exp(Z->Imag) - exp(-Z->Imag) ) , 
+                             cos(Z->Real) * ( exp(Z->Imag) + exp(-Z->Imag) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex cotangent
+    Z_cotangent = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_cotangent;
 }
 
 /**
