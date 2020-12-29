@@ -72,6 +72,11 @@ t_complex;
 
 typedef t_complex* Complex;
 
+// Imaginary unit
+const t_complex t_i {0, 1, 1, PI/2};
+
+Complex i = &t_i;
+
 // Complex number handler
 typedef struct complex_handler
 {
@@ -91,6 +96,12 @@ typedef struct complex_handler
   Complex  (*exp)(Complex Z);                             // Natural exponential
   Complex* (*sqrt)(Complex Z)                             // Square root
   Complex* (*nthroot)(Complex Z, uint8_t n)               // Nth complex root
+  Complex  (*sin)(Complex Z);                             // Sin(Z)
+  Complex  (*cos)(Complex Z);                             // Cos(Z)
+  Complex  (*tan)(Complex Z);                             // Tan(Z)
+  Complex  (*csc)(Complex Z);                             // Csc(Z)
+  Complex  (*sec)(Complex Z);                             // Sec(Z)
+  Complex  (*cot)(Complex Z);                             // Cot(Z)
   uint8_t  (*del)(Complex Z);                             // Delete complex
 }
 t_ComplexHandler;
@@ -226,6 +237,48 @@ extern Complex* complex_sqrt(Complex Z);
 @retval Array to complex results
 */
 extern Complex* complex_nthroot(Complex Z, uint8_t n);
+
+/**
+@brief  Calculates the complex sine of Z
+@param  Z: Pointer to complex
+@retval Complex sine
+*/
+extern Complex complex_sine(Complex Z);
+
+/**
+@brief  Calculates the complex cosine of Z
+@param  Z: Pointer to complex
+@retval Complex cosine
+*/
+extern Complex complex_cosine(Complex Z);
+
+/**
+@brief  Calculates the complex tangent of Z
+@param  Z: Pointer to complex
+@retval Complex tangent
+*/
+extern Complex complex_tangent(Complex Z);
+
+/**
+@brief  Calculates the complex cosecant of Z
+@param  Z: Pointer to complex
+@retval Complex cosecant
+*/
+extern Complex complex_cosecant(Complex Z);
+
+/**
+@brief  Calculates the complex secant of Z
+@param  Z: Pointer to complex
+@retval Complex secant
+*/
+extern Complex complex_secant(Complex Z);
+
+/**
+@brief  Calculates the complex cotangent of Z
+@param  Z: Pointer to complex
+@retval Complex cotangent
+*/
+extern Complex complex_cotangent(Complex Z);
 
 /**
 @brief  Deletes complex and frees allocated memory

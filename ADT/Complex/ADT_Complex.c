@@ -38,9 +38,14 @@ t_ComplexHandler Cmplx_Hdlr
   complex_exp,             // Natural exponential
   complex_sqrt,            // Square root
   complex_nthroot,         // Nth complex root
+  complex_sine,            // Sin(Z)
+  complex_cosine,          // Cos(Z)
+  complex_tangent,         // Tan(Z)
+  complex_cosecant,        // Csc(Z)
+  complex_secant,          // Sec(Z)
+  complex_cotangent,       // Cot(Z)
   complex_delete           // Delete complex
 };
-
 
 //----------------------------------------------------------------------------//
 //                              Private functions                             //
@@ -424,7 +429,7 @@ Complex* complex_sqrt(Complex Z)
   
   Z_roots = (Complex*)calloc( 2, sizeof(t_complex) ); // Memory allocation
   
-  if(Z_roots != NULL)
+  if(Z_roots != NULL && Z != NULL)
   {
     // First complex root
     Z_root_real = sqrt( (Z->Real + Z->Mod)/2 );
@@ -455,7 +460,7 @@ Complex* complex_nthroot(Complex Z, uint8_t n)
   
   Z_roots = (Complex*)calloc( n, sizeof(t_complex) ); // Memory allocation
   
-  if(Z_roots != NULL)
+  if(Z_roots != NULL && Z != NULL)
   {
     // Calculate the n roots of Z using De Moivre's Theorem
     for(k = 0; k <= n - 1; i++)
@@ -472,6 +477,156 @@ Complex* complex_nthroot(Complex Z, uint8_t n)
   }
   
   return Z_roots;
+}
+
+/**
+@brief  Calculates the complex sine of Z
+@param  Z: Pointer to complex
+@retval Complex sine
+*/
+Complex complex_sine(Complex Z)
+{
+  Complex Z_num = NULL;    // Numerator
+  Complex Z_den = NULL;    // Denominator
+  Complex Z_sine = NULL;   // Sine
+  
+  if(Z != NULL)
+  {
+     // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.scalar(i, 2);
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex sine
+    Z_sine = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_sine;
+}
+
+/**
+@brief  Calculates the complex cosine of Z
+@param  Z: Pointer to complex
+@retval Complex cosine
+*/
+Complex complex_cosine(Complex Z)
+{
+  Complex Z_num = NULL;      // Numerator
+  Complex Z_cosine = NULL;   // Cosine
+  
+  if(Z != NULL)
+  {
+     // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates complex sine
+    Z_cosine = Cmplx_Hdlr.scalar(Z_num, 0.5);
+    
+    // Frees allocated memory for auxiliary variable
+    Cmplx_Hdlr.del(Z_num);
+  }
+  
+  return Z_cosine;
+}
+
+/**
+@brief  Calculates the complex tangent of Z
+@param  Z: Pointer to complex
+@retval Complex tangent
+*/
+Complex complex_tangent(Complex Z)
+{
+  Complex Z_num = NULL;       // Numerator
+  Complex Z_den = NULL;       // Denominator
+  Complex Z_tangent = NULL;   // Tangent
+  
+  if(Z != NULL)
+  {
+     // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Real) * ( exp(-Z->Imag) - exp(Z->Imag) ) , 
+                             sin(Z->Real) * ( exp(-Z->Imag) + exp(Z->Imag) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( sin(Z->Real) * ( exp(Z->Imag) - exp(-Z->Imag) ) , 
+                             cos(Z->Real) * ( exp(Z->Imag) + exp(-Z->Imag) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex tangent
+    Z_tangent = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_tangent;
+}
+
+/**
+@brief  Calculates the complex cosecant of Z
+@param  Z: Pointer to complex
+@retval Complex cosecant
+*/
+Complex complex_cosecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex secant of Z
+@param  Z: Pointer to complex
+@retval Complex secant
+*/
+Complex complex_secant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex cotangent of Z
+@param  Z: Pointer to complex
+@retval Complex cotangent
+*/
+Complex complex_cotangent(Complex Z)
+{
+  return NULL;
 }
 
 /**
