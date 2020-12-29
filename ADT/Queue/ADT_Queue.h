@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/26/2020
+ * Last modified : 12/29/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -36,14 +36,15 @@
 // Data type stored in queue
 typedef int Data;
 
-// Stack node
-typedef struct t_node
+// Queue node
+typedef struct node
 {
-  Data            value;    // Stored data
-  struct t_node*  next;     // Pointer to next element
-} node;
+  Data          value;    // Stored data
+  struct node*  next;     // Pointer to next element
+}
+t_node;
 
-typedef node* Node;
+typedef t_node* Node;
 
 // Queue
 typedef struct t_queue
@@ -57,7 +58,7 @@ typedef struct t_queue
 typedef queue* Queue;
 
 // Queue handler
-typedef struct
+typedef struct queue_handler
 {
   Queue    (*init)(uint16_t maxS);                  // Create new queue
   uint8_t  (*isEmpty)(Queue q);                     // Is queue empty?
@@ -66,7 +67,8 @@ typedef struct
   uint8_t  (*dequeue)(Queue q, Data* removedVal);   // Dequeue
   uint8_t  (*clear)(Queue q);                       // Clear
   uint8_t  (*del)(Queue q);                         // Delete
-}t_QueueHandler;
+}
+t_QueueHandler;
 
 extern t_QueueHandler Queue_Hdlr;
 

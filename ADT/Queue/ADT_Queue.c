@@ -6,7 +6,7 @@
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/13/2020
+ * Last modified : 12/29/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -80,7 +80,7 @@ uint8_t queue_isFull(Queue q)
 */
 uint8_t queue_insert(Queue q, Data val)
 {
-  Node newNode = (Node)malloc(sizeof(node)); // Memory allocation for node
+  Node newNode = (Node)malloc(sizeof(t_node)); // Memory allocation for node
 
   // Validates memory allocation
   if(newNode == NULL)
