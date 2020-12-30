@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/28/2020
+ * Last modified : 12/30/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -72,11 +72,6 @@ t_complex;
 
 typedef t_complex* Complex;
 
-// Imaginary unit
-const t_complex t_i {0, 1, 1, PI/2};
-
-Complex i = &t_i;
-
 // Complex number handler
 typedef struct complex_handler
 {
@@ -87,21 +82,28 @@ typedef struct complex_handler
   double   (*argument)(Complex Z, ANGLE_UNIT arg);        // Get argument
   uint8_t  (*update)(Complex Z, double val, COMPONENT c); // Update element
   Complex  (*conjugate)(Complex Z);                       // Conjugate
-  Complex  (*sum)(Complex Z1, Complex Z2);                // Complex sum
+  Complex  (*sum)(Complex Z1, Complex Z2);                // Sum
+  Complex  (*sub)(Complex Z1, Complex Z2);                // Subtraction
   Complex  (*product)(Complex Z1, Complex Z2);            // Complex product
   Complex  (*scalar)(Complex Z, double k);                // Scalar product
-  Complex  (*division)(Complex Z1, Complex Z2);           // Complex division
-  Complex  (*inv)(Complex Z);                             // Complex reciprocal
+  Complex  (*division)(Complex Z1, Complex Z2);           // Division
+  Complex  (*inv)(Complex Z);                             // Reciprocal
   Complex  (*pow)(Complex Z, double n);                   // Real exponential
   Complex  (*exp)(Complex Z);                             // Natural exponential
-  Complex* (*sqrt)(Complex Z)                             // Square root
-  Complex* (*nthroot)(Complex Z, uint8_t n)               // Nth complex root
+  Complex* (*sqrt)(Complex Z);                            // Square root
+  Complex* (*nthroot)(Complex Z, uint8_t n);              // Nth complex root
   Complex  (*sin)(Complex Z);                             // Sin(Z)
   Complex  (*cos)(Complex Z);                             // Cos(Z)
   Complex  (*tan)(Complex Z);                             // Tan(Z)
   Complex  (*csc)(Complex Z);                             // Csc(Z)
   Complex  (*sec)(Complex Z);                             // Sec(Z)
   Complex  (*cot)(Complex Z);                             // Cot(Z)
+  Complex  (*sinh)(Complex Z);                            // Sinh(Z)
+  Complex  (*cosh)(Complex Z);                            // Cosh(Z)
+  Complex  (*tanh)(Complex Z);                            // Tanh(Z)
+  Complex  (*csch)(Complex Z);                            // Csch(Z)
+  Complex  (*sech)(Complex Z);                            // Sech(Z)
+  Complex  (*coth)(Complex Z);                            // Coth(Z)
   uint8_t  (*del)(Complex Z);                             // Delete complex
 }
 t_ComplexHandler;
@@ -177,6 +179,14 @@ extern Complex complex_conjugate(Complex Z);
 @retval Pointer to sum complex
 */
 extern Complex complex_sum(Complex Z1, Complex Z2);
+
+/**
+@brief  Obtains the subtraction of two complex numbers (Z1 - Z2)
+@param  Z1: Pointer to first complex
+        Z2: Pointer to second complex
+@retval Pointer to subtraction result
+*/
+extern Complex complex_subtraction(Complex Z1, Complex Z2);
 
 /**
 @brief  Obtains the product of two complex numbers
@@ -279,6 +289,48 @@ extern Complex complex_secant(Complex Z);
 @retval Complex cotangent
 */
 extern Complex complex_cotangent(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic sine of Z
+@param  Z: Pointer to complex
+@retval Complex sine
+*/
+extern Complex complex_hyperbolic_sine(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic cosine of Z
+@param  Z: Pointer to complex
+@retval Complex cosine
+*/
+extern Complex complex_hyperbolic_cosine(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic tangent of Z
+@param  Z: Pointer to complex
+@retval Complex tangent
+*/
+extern Complex complex_hyperbolic_tangent(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic cosecant of Z
+@param  Z: Pointer to complex
+@retval Complex cosecant
+*/
+extern Complex complex_hyperbolic_cosecant(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic secant of Z
+@param  Z: Pointer to complex
+@retval Complex secant
+*/
+extern Complex complex_hyperbolic_secant(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic cotangent of Z
+@param  Z: Pointer to complex
+@retval Complex cotangent
+*/
+extern Complex complex_hyperbolic_cotangent(Complex Z);
 
 /**
 @brief  Deletes complex and frees allocated memory

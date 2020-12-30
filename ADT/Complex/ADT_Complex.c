@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/28/2020
+ * Last modified : 12/30/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -20,31 +20,38 @@
 //----------------------------------------------------------------------------//
 
 // Complex handler
-t_ComplexHandler Cmplx_Hdlr
+t_ComplexHandler Cmplx_Hdlr =
 {
-  complex_create,          // Create complex
-  complex_isNull,          // Is a null complex?
-  complex_areEqual,        // Z1 == Z2?
-  complex_getModulus,      // Get modulus
-  complex_getArgument,     // Get argument
-  complex_update,          // Update element
-  complex_conjugate,       // Conjugate
-  complex_sum,             // Complex sum
-  complex_product,         // Complex product
-  complex_scalar,          // Scalar product
-  complex_division,        // Complex division
-  complex_reciprocal,      // Complex reciprocal
-  complex_power,           // Real exponential
-  complex_exp,             // Natural exponential
-  complex_sqrt,            // Square root
-  complex_nthroot,         // Nth complex root
-  complex_sine,            // Sin(Z)
-  complex_cosine,          // Cos(Z)
-  complex_tangent,         // Tan(Z)
-  complex_cosecant,        // Csc(Z)
-  complex_secant,          // Sec(Z)
-  complex_cotangent,       // Cot(Z)
-  complex_delete           // Delete complex
+  complex_create,                    // Create complex
+  complex_isNull,                    // Is a null complex?
+  complex_areEqual,                  // Z1 == Z2?
+  complex_getModulus,                // Get modulus
+  complex_getArgument,               // Get argument
+  complex_update,                    // Update element
+  complex_conjugate,                 // Conjugate
+  complex_sum,                       // Sum
+  complex_subtraction,               // Subtraction
+  complex_product,                   // Complex product
+  complex_scalar,                    // Scalar product
+  complex_division,                  // Division
+  complex_reciprocal,                // Reciprocal
+  complex_power,                     // Real exponential
+  complex_exp,                       // Natural exponential
+  complex_sqrt,                      // Square root
+  complex_nthroot,                   // Nth complex root
+  complex_sine,                      // Sin(Z)
+  complex_cosine,                    // Cos(Z)
+  complex_tangent,                   // Tan(Z)
+  complex_cosecant,                  // Csc(Z)
+  complex_secant,                    // Sec(Z)
+  complex_cotangent,                 // Cot(Z)
+  complex_hyperbolic_sine,           // Sinh(Z)
+  complex_hyperbolic_cosine,         // Cosh(Z)
+  complex_hyperbolic_tangent,        // Tanh(Z)
+  complex_hyperbolic_cosecant,       // Csch(Z)
+  complex_hyperbolic_secant,         // Sech(Z)
+  complex_hyperbolic_cotangent,      // Coth(Z)
+  complex_delete                     // Delete complex
 };
 
 //----------------------------------------------------------------------------//
@@ -76,7 +83,7 @@ void complex_argument(Complex Z)
   {
     if(Z->Real > 0 && Z->Imag != 0)
     {
-      Z->Arg = 2 * atan(Z->Imag / (Z->Mod + Z->Real) )
+      Z->Arg = 2 * atan(Z->Imag / (Z->Mod + Z->Real) );
     }
     else if(Z->Real < 0 && Z->Imag == 0)
     {
@@ -174,7 +181,7 @@ double complex_getModulus(Complex Z)
 @retval Argument value
 @note Previous validation of input arguments is expected before function call
 */
-double complex_getArgument(Complex Z, Angle_Unit arg)
+double complex_getArgument(Complex Z, ANGLE_UNIT arg)
 {
   if(arg == DEG)
   {
@@ -195,7 +202,7 @@ double complex_getArgument(Complex Z, Angle_Unit arg)
              - IM: Imaginary component
 @retval TRUE if element was updated, FALSE otherwise
 */
-uint8_t complex_update(Complex Z, double val, Component c)
+uint8_t complex_update(Complex Z, double val, COMPONENT c)
 {
   if(Z != NULL)
   {
@@ -260,6 +267,32 @@ Complex complex_sum(Complex Z1, Complex Z2)
   }
   
   return Z_sum;
+}
+
+/**
+@brief  Obtains the subtraction of two complex numbers (Z1 - Z2)
+@param  Z1: Pointer to first complex
+        Z2: Pointer to second complex
+@retval Pointer to subtraction result
+*/
+Complex complex_subtraction(Complex Z1, Complex Z2)
+{
+  Complex Z_sub = NULL;
+  double Z_sub_real = 0, Z_sub_imag = 0;
+  
+  if(Z1 != NULL && Z2 != NULL)
+  {
+    // Real part
+    Z_sub_real = Z1->Real - Z2->Real;
+    
+    // Imaginary part
+    Z_sub_imag = Z1->Imag - Z2->Imag;
+    
+    // Initialize complex
+    Z_sub = Cmplx_Hdlr.init(Z_sub_real, Z_sub_imag);
+  }
+  
+  return Z_sub;
 }
 
 /**
@@ -463,7 +496,7 @@ Complex* complex_nthroot(Complex Z, uint8_t n)
   if(Z_roots != NULL && Z != NULL)
   {
     // Calculate the n roots of Z using De Moivre's Theorem
-    for(k = 0; k <= n - 1; i++)
+    for(k = 0; k <= n - 1; k++)
     {
       // Real part of (k+1)th root
       Z_root_real = pow(Z->Mod, 1/n) * cos( (Z->Arg + 2*PI*k) / n );
@@ -502,7 +535,7 @@ Complex complex_sine(Complex Z)
     }
     
     // Calculates denominator
-    Z_den = Cmplx_Hdlr.scalar(i, 2);
+    Z_den = Cmplx_Hdlr.init(0, 2);
     
     if(Z_den == NULL)
     {
@@ -613,7 +646,7 @@ Complex complex_cosecant(Complex Z)
   if(Z != NULL)
   {
     // Calculates numerator
-    Z_num = Cmplx_Hdlr.scalar(i, 2);
+    Z_num = Cmplx_Hdlr.init(0, 2);
     
     if(Z_num == NULL)
     {
@@ -684,7 +717,7 @@ Complex complex_secant(Complex Z)
     Cmplx_Hdlr.del(Z_den);
   }
   
-  return Z_cosine;
+  return Z_secant;
 }
 
 /**
@@ -730,6 +763,66 @@ Complex complex_cotangent(Complex Z)
   }
   
   return Z_cotangent;
+}
+
+/**
+@brief  Calculates the complex hyperbolic sine of Z
+@param  Z: Pointer to complex
+@retval Complex sine
+*/
+Complex complex_hyperbolic_sine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic cosine of Z
+@param  Z: Pointer to complex
+@retval Complex cosine
+*/
+Complex complex_hyperbolic_cosine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic tangent of Z
+@param  Z: Pointer to complex
+@retval Complex tangent
+*/
+Complex complex_hyperbolic_tangent(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic cosecant of Z
+@param  Z: Pointer to complex
+@retval Complex cosecant
+*/
+Complex complex_hyperbolic_cosecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic secant of Z
+@param  Z: Pointer to complex
+@retval Complex secant
+*/
+Complex complex_hyperbolic_secant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic cotangent of Z
+@param  Z: Pointer to complex
+@retval Complex cotangent
+*/
+Complex complex_hyperbolic_cotangent(Complex Z)
+{
+  return NULL;
 }
 
 /**
