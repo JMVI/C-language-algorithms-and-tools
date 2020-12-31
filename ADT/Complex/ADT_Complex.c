@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/30/2020
+ * Last modified : 12/31/2020
  * -----------------------------------------------------------------------------
  */
 
@@ -768,61 +768,241 @@ Complex complex_cotangent(Complex Z)
 /**
 @brief  Calculates the complex hyperbolic sine of Z
 @param  Z: Pointer to complex
-@retval Complex sine
+@retval Complex hyperbolic sine
 */
 Complex complex_hyperbolic_sine(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;    // Numerator
+  Complex Z_sinh = NULL;   // Hyperbolic sine
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic sine
+    Z_sinh = Cmplx_Hdlr.scalar(Z_num, 0.5);
+    
+    // Frees allocated memory for auxiliary variable
+    Cmplx_Hdlr.del(Z_num);
+  }
+  
+  return Z_sinh;
 }
 
 /**
 @brief  Calculates the complex hyperbolic cosine of Z
 @param  Z: Pointer to complex
-@retval Complex cosine
+@retval Complex hyperbolic cosine
 */
 Complex complex_hyperbolic_cosine(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;    // Numerator
+  Complex Z_cosh = NULL;   // Hyperbolic cosine
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic cosine
+    Z_cosh = Cmplx_Hdlr.scalar(Z_num, 0.5);
+    
+    // Frees allocated memory for auxiliary variable
+    Cmplx_Hdlr.del(Z_num);
+  }
+  
+  return Z_cosh;
 }
 
 /**
 @brief  Calculates the complex hyperbolic tangent of Z
 @param  Z: Pointer to complex
-@retval Complex tangent
+@retval Complex hyperbolic tangent
 */
 Complex complex_hyperbolic_tangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;       // Numerator
+  Complex Z_den = NULL;       // Denominator
+  Complex Z_tanh = NULL;      // Hyperbolic tangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic tangent
+    Z_tanh = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_tanh;
 }
 
 /**
 @brief  Calculates the complex hyperbolic cosecant of Z
 @param  Z: Pointer to complex
-@retval Complex cosecant
+@retval Complex hyperbolic cosecant
 */
 Complex complex_hyperbolic_cosecant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;        // Numerator
+  Complex Z_den = NULL;        // Denominator
+  Complex Z_csch = NULL;       // Hyperbolic cosecant
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init(0, 2);
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic cosecant
+    Z_csch = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_csch;
 }
 
 /**
 @brief  Calculates the complex hyperbolic secant of Z
 @param  Z: Pointer to complex
-@retval Complex secant
+@retval Complex hyperbolic secant
 */
 Complex complex_hyperbolic_secant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;        // Numerator
+  Complex Z_den = NULL;        // Denominator
+  Complex Z_sech = NULL;       // Hyperbolic secant
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init(0, 2);
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic secant
+    Z_sech = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_sech;
 }
 
 /**
 @brief  Calculates the complex hyperbolic cotangent of Z
 @param  Z: Pointer to complex
-@retval Complex cotangent
+@retval Complex hyperbolic cotangent
 */
 Complex complex_hyperbolic_cotangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;       // Numerator
+  Complex Z_den = NULL;       // Denominator
+  Complex Z_coth = NULL;      // Hyperbolic cotangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) );
+    
+    if(Z_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator
+    Z_den = Cmplx_Hdlr.init( cos(Z->Imag) * ( exp(Z->Real) - exp(-Z->Real) ) , 
+                             sin(Z->Imag) * ( exp(Z->Real) + exp(-Z->Real) ) );
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for numerator
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic cotangent
+    Z_coth = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_coth;
 }
 
 /**
