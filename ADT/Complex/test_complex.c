@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : test_complex.c
  * Description   : Test file for complex numbers ADT.

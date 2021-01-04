@@ -1,11 +1,11 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Complex.h
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/30/2020
+ * Last modified : 01/04/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -92,6 +92,8 @@ typedef struct complex_handler
   Complex  (*exp)(Complex Z);                             // Natural exponential
   Complex* (*sqrt)(Complex Z);                            // Square root
   Complex* (*nthroot)(Complex Z, uint8_t n);              // Nth complex root
+  Complex  (*log)(Complex Z);                             // Natural logarithm
+  Complex  (*logn)(Complex Z, uint8_t n);                 // Base-n logarithm
   Complex  (*sin)(Complex Z);                             // Sin(Z)
   Complex  (*cos)(Complex Z);                             // Cos(Z)
   Complex  (*tan)(Complex Z);                             // Tan(Z)
@@ -247,6 +249,21 @@ extern Complex* complex_sqrt(Complex Z);
 @retval Array to complex results
 */
 extern Complex* complex_nthroot(Complex Z, uint8_t n);
+
+/**
+@brief  Calculates the natural logarithm of a complex number
+@param  Z: Pointer to complex
+@retval Complex logarithm
+*/
+extern Complex complex_log(Complex Z);
+
+/**
+@brief  Calculates the base-n logarithm of a complex number
+@param  Z: Pointer to complex
+        n: Logarithm base
+@retval Complex logarithm
+*/
+extern Complex complex_logn(Complex Z, uint8_t n);
 
 /**
 @brief  Calculates the complex sine of Z

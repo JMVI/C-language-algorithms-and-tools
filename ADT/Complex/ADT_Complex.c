@@ -1,11 +1,11 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Complex.c
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/31/2020
+ * Last modified : 01/04/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -39,6 +39,8 @@ t_ComplexHandler Cmplx_Hdlr =
   complex_exp,                       // Natural exponential
   complex_sqrt,                      // Square root
   complex_nthroot,                   // Nth complex root
+  complex_log,                       // Natural logarithm
+  complex_logn,                      // Base-n logarithm
   complex_sine,                      // Sin(Z)
   complex_cosine,                    // Cos(Z)
   complex_tangent,                   // Tan(Z)
@@ -416,7 +418,7 @@ Complex complex_power(Complex Z, double n)
     Z_pow_real = pow(Z->Mod, n) * cos(n * Z->Arg);
     
     // Imaginary part
-    Z_pow_imag = pow(Z->Mod, n) * sin(n * Z->Arg);;
+    Z_pow_imag = pow(Z->Mod, n) * sin(n * Z->Arg);
     
     // Initialize complex
     Z_pow = Cmplx_Hdlr.init(Z_pow_real, Z_pow_imag);
@@ -441,7 +443,7 @@ Complex complex_exp(Complex Z)
     Z_pow_real = exp(Z->Real) * cos(Z->Imag);
     
     // Imaginary part
-    Z_pow_imag = exp(Z->Real) * sin(Z->Imag);;
+    Z_pow_imag = exp(Z->Real) * sin(Z->Imag);
     
     // Initialize complex
     Z_pow = Cmplx_Hdlr.init(Z_pow_real, Z_pow_imag);
@@ -510,6 +512,57 @@ Complex* complex_nthroot(Complex Z, uint8_t n)
   }
   
   return Z_roots;
+}
+
+/**
+@brief  Calculates the natural logarithm of a complex number
+@param  Z: Pointer to complex
+@retval Complex logarithm
+*/
+Complex complex_log(Complex Z)
+{
+  Complex Z_log = NULL;
+  double Z_log_real = 0, Z_log_imag = 0;
+  
+  if(Z != NULL)
+  {
+    // Real part
+    Z_log_real = log(Z->Mod);
+    
+    // Imaginary part
+    Z_log_imag = Z->Arg;
+    
+    // Initialize complex
+    Z_log = Cmplx_Hdlr.init(Z_log_real, Z_log_imag);
+  }
+  
+  return Z_log;
+}
+
+/**
+@brief  Calculates the base-n logarithm of a complex number
+@param  Z: Pointer to complex
+        n: Logarithm base
+@retval Complex logarithm
+*/
+Complex complex_logn(Complex Z, uint8_t n)
+{
+  Complex Z_logn = NULL;
+  double Z_logn_real = 0, Z_logn_imag = 0;
+  
+  if(Z != NULL)
+  {
+    // Real part
+    Z_logn_real = log(Z->Mod)/log(n);
+    
+    // Imaginary part
+    Z_logn_imag = Z->Arg/log(n);
+    
+    // Initialize complex
+    Z_logn = Cmplx_Hdlr.init(Z_logn_real, Z_logn_imag);
+  }
+  
+  return Z_logn;
 }
 
 /**
