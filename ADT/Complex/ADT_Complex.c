@@ -47,12 +47,24 @@ t_ComplexHandler Cmplx_Hdlr =
   complex_cosecant,                  // Csc(Z)
   complex_secant,                    // Sec(Z)
   complex_cotangent,                 // Cot(Z)
+  complex_arcsine,                   // Asin(Z)
+  complex_arccosine,                 // Acos(Z)
+  complex_arctangent,                // Atan(Z)
+  complex_arccosecant,               // Acsc(Z)
+  complex_arcsecant,                 // Asec(Z)
+  complex_arccotangent,              // Acot(Z)
   complex_hyperbolic_sine,           // Sinh(Z)
   complex_hyperbolic_cosine,         // Cosh(Z)
   complex_hyperbolic_tangent,        // Tanh(Z)
   complex_hyperbolic_cosecant,       // Csch(Z)
   complex_hyperbolic_secant,         // Sech(Z)
   complex_hyperbolic_cotangent,      // Coth(Z)
+  complex_hyperbolic_arcsine,        // Asinh(Z)
+  complex_hyperbolic_arccosine,      // Acosh(Z)
+  complex_hyperbolic_arctangent,     // Atanh(Z)
+  complex_hyperbolic_arccosecant,    // Acsch(Z)
+  complex_hyperbolic_arcsecant,      // Asech(Z)
+  complex_hyperbolic_arccotangent,   // Acoth(Z)
   complex_delete                     // Delete complex
 };
 
@@ -819,6 +831,66 @@ Complex complex_cotangent(Complex Z)
 }
 
 /**
+@brief  Calculates the complex arcsine of Z
+@param  Z: Pointer to complex
+@retval Complex arcsine
+*/
+Complex complex_arcsine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex arccosine of Z
+@param  Z: Pointer to complex
+@retval Complex arccosine
+*/
+Complex complex_arccosine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex arctangent of Z
+@param  Z: Pointer to complex
+@retval Complex arctangent
+*/
+Complex complex_arctangent(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex arccosecant of Z
+@param  Z: Pointer to complex
+@retval Complex arccosecant
+*/
+Complex complex_arccosecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex arcsecant of Z
+@param  Z: Pointer to complex
+@retval Complex arcsecant
+*/
+Complex complex_arcsecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex arccotangent of Z
+@param  Z: Pointer to complex
+@retval Complex arccotangent
+*/
+Complex complex_arccotangent(Complex Z)
+{
+  return NULL;
+}
+
+/**
 @brief  Calculates the complex hyperbolic sine of Z
 @param  Z: Pointer to complex
 @retval Complex hyperbolic sine
@@ -1056,6 +1128,66 @@ Complex complex_hyperbolic_cotangent(Complex Z)
   }
   
   return Z_coth;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arcsine of Z
+@param  Z: Pointer to complex
+@retval Complex arcsine
+*/
+Complex complex_hyperbolic_arcsine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arccosine of Z
+@param  Z: Pointer to complex
+@retval Complex arccosine
+*/
+Complex complex_hyperbolic_arccosine(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arctangent of Z
+@param  Z: Pointer to complex
+@retval Complex arctangent
+*/
+Complex complex_hyperbolic_arctangent(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arccosecant of Z
+@param  Z: Pointer to complex
+@retval Complex arccosecant
+*/
+Complex complex_hyperbolic_arccosecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arcsecant of Z
+@param  Z: Pointer to complex
+@retval Complex arcsecant
+*/
+Complex complex_hyperbolic_arcsecant(Complex Z)
+{
+  return NULL;
+}
+
+/**
+@brief  Calculates the complex hyperbolic arccotangent of Z
+@param  Z: Pointer to complex
+@retval Complex arccotangent
+*/
+Complex complex_hyperbolic_arccotangent(Complex Z)
+{
+  return NULL;
 }
 
 /**

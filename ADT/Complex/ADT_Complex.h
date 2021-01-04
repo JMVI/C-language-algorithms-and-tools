@@ -100,12 +100,24 @@ typedef struct complex_handler
   Complex  (*csc)(Complex Z);                             // Csc(Z)
   Complex  (*sec)(Complex Z);                             // Sec(Z)
   Complex  (*cot)(Complex Z);                             // Cot(Z)
+  Complex  (*asin)(Complex Z);                            // Asin(Z)
+  Complex  (*acos)(Complex Z);                            // Acos(Z)
+  Complex  (*atan)(Complex Z);                            // Atan(Z)
+  Complex  (*acsc)(Complex Z);                            // Acsc(Z)
+  Complex  (*asec)(Complex Z);                            // Asec(Z)
+  Complex  (*acot)(Complex Z);                            // Acot(Z)
   Complex  (*sinh)(Complex Z);                            // Sinh(Z)
   Complex  (*cosh)(Complex Z);                            // Cosh(Z)
   Complex  (*tanh)(Complex Z);                            // Tanh(Z)
   Complex  (*csch)(Complex Z);                            // Csch(Z)
   Complex  (*sech)(Complex Z);                            // Sech(Z)
   Complex  (*coth)(Complex Z);                            // Coth(Z)
+  Complex  (*asinh)(Complex Z);                           // Asinh(Z)
+  Complex  (*acosh)(Complex Z);                           // Acosh(Z)
+  Complex  (*atanh)(Complex Z);                           // Atanh(Z)
+  Complex  (*acsch)(Complex Z);                           // Acsch(Z)
+  Complex  (*asech)(Complex Z);                           // Asech(Z)
+  Complex  (*acoth)(Complex Z);                           // Acoth(Z)
   uint8_t  (*del)(Complex Z);                             // Delete complex
 }
 t_ComplexHandler;
@@ -308,6 +320,48 @@ extern Complex complex_secant(Complex Z);
 extern Complex complex_cotangent(Complex Z);
 
 /**
+@brief  Calculates the complex arcsine of Z
+@param  Z: Pointer to complex
+@retval Complex arcsine
+*/
+extern Complex complex_arcsine(Complex Z);
+
+/**
+@brief  Calculates the complex arccosine of Z
+@param  Z: Pointer to complex
+@retval Complex arccosine
+*/
+extern Complex complex_arccosine(Complex Z);
+
+/**
+@brief  Calculates the complex arctangent of Z
+@param  Z: Pointer to complex
+@retval Complex arctangent
+*/
+extern Complex complex_arctangent(Complex Z);
+
+/**
+@brief  Calculates the complex arccosecant of Z
+@param  Z: Pointer to complex
+@retval Complex arccosecant
+*/
+extern Complex complex_arccosecant(Complex Z);
+
+/**
+@brief  Calculates the complex arcsecant of Z
+@param  Z: Pointer to complex
+@retval Complex arcsecant
+*/
+extern Complex complex_arcsecant(Complex Z);
+
+/**
+@brief  Calculates the complex arccotangent of Z
+@param  Z: Pointer to complex
+@retval Complex arccotangent
+*/
+extern Complex complex_arccotangent(Complex Z);
+
+/**
 @brief  Calculates the complex hyperbolic sine of Z
 @param  Z: Pointer to complex
 @retval Complex sine
@@ -348,6 +402,48 @@ extern Complex complex_hyperbolic_secant(Complex Z);
 @retval Complex cotangent
 */
 extern Complex complex_hyperbolic_cotangent(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arcsine of Z
+@param  Z: Pointer to complex
+@retval Complex arcsine
+*/
+extern Complex complex_hyperbolic_arcsine(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arccosine of Z
+@param  Z: Pointer to complex
+@retval Complex arccosine
+*/
+extern Complex complex_hyperbolic_arccosine(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arctangent of Z
+@param  Z: Pointer to complex
+@retval Complex arctangent
+*/
+extern Complex complex_hyperbolic_arctangent(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arccosecant of Z
+@param  Z: Pointer to complex
+@retval Complex arccosecant
+*/
+extern Complex complex_hyperbolic_arccosecant(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arcsecant of Z
+@param  Z: Pointer to complex
+@retval Complex arcsecant
+*/
+extern Complex complex_hyperbolic_arcsecant(Complex Z);
+
+/**
+@brief  Calculates the complex hyperbolic arccotangent of Z
+@param  Z: Pointer to complex
+@retval Complex arccotangent
+*/
+extern Complex complex_hyperbolic_arccotangent(Complex Z);
 
 /**
 @brief  Deletes complex and frees allocated memory
