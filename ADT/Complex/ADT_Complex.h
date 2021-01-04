@@ -90,7 +90,7 @@ typedef struct complex_handler
   Complex  (*inv)(Complex Z);                             // Reciprocal
   Complex  (*pow)(Complex Z, double n);                   // Real exponential
   Complex  (*exp)(Complex Z);                             // Natural exponential
-  Complex* (*sqrt)(Complex Z);                            // Square root
+  Complex  (*sqrt)(Complex Z);                            // Square root
   Complex* (*nthroot)(Complex Z, uint8_t n);              // Nth complex root
   Complex  (*log)(Complex Z);                             // Natural logarithm
   Complex  (*logn)(Complex Z, uint8_t n);                 // Base-n logarithm
@@ -251,9 +251,9 @@ extern Complex complex_exp(Complex Z);
 /**
 @brief  Calculates the square root of a complex number
 @param  Z: Pointer to complex
-@retval Array to complex results
+@retval Complex square root
 */
-extern Complex* complex_sqrt(Complex Z);
+extern Complex complex_sqrt(Complex Z);
 
 /**
 @brief  Calculates the Nth root of a complex number
