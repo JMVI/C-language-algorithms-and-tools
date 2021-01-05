@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Queue.c
  * Description   : Abstract Data Type for queue. Implementation with integer
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/29/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -43,11 +43,11 @@ t_QueueHandler Queue_Hdlr =
 */
 Queue queue_create(uint16_t maxS)
 {
-  Queue newQueue = (Queue)malloc(sizeof(queue)); // Memory allocation
-  newQueue->size = 0;                            // Initializes empty queue
-  newQueue->front = NULL;                        // Initial front
-  newQueue->tail = NULL;                         // Initial tail
-  newQueue->maxSize = maxS;                      // Fix max. size
+  Queue newQueue = (Queue)malloc(sizeof(t_queue)); // Memory allocation
+  newQueue->size = 0;                              // Initializes empty queue
+  newQueue->front = NULL;                          // Initial front
+  newQueue->tail = NULL;                           // Initial tail
+  newQueue->maxSize = maxS;                        // Fix max. size
   
   return newQueue;
 }

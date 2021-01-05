@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Queue.h
  * Description   : Abstract Data Type for queue. Implementation with integer
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 12/29/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -47,15 +47,16 @@ t_node;
 typedef t_node* Node;
 
 // Queue
-typedef struct t_queue
+typedef struct queue
 {
   uint16_t  size;       // Queue size
   uint16_t  maxSize;    // Max. Size
   Node      front;      // Pointer to front
   Node      tail;       // Pointer to tail
-} queue;
+}
+t_queue;
 
-typedef queue* Queue;
+typedef t_queue* Queue;
 
 // Queue handler
 typedef struct queue_handler
