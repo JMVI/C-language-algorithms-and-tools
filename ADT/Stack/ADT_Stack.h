@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Stack.h
  * Description   : Abstract Data Type for stack. Implementation with integer
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/26/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -37,23 +37,25 @@
 typedef int Data;
 
 // Stack node
-typedef struct t_node
+typedef struct node
 {
   Data            value;    // Stored data
-  struct t_node*  next;     // Pointer to next element
-} node;
+  struct node*    next;     // Pointer to next element
+}
+t_node;
 
-typedef node* Node;
+typedef t_node* Node;
 
 // Stack
-typedef struct t_stack
+typedef struct stack
 {
   uint16_t  size;       // Stack size
   uint16_t  maxSize;    // Max. Size
   Node      top;        // Pointer to Top
-} stack;
+}
+t_stack;
 
-typedef stack* Stack;
+typedef t_stack* Stack;
 
 // Stack handler
 typedef struct
@@ -65,7 +67,8 @@ typedef struct
   uint8_t  (*pop)(Stack stck, Data* poppedVal);   // Pop
   uint8_t  (*clear)(Stack stck);                  // Clear
   uint8_t  (*del)(Stack stck);                    // Delete
-}t_StackHandler;
+}
+t_StackHandler;
 
 extern t_StackHandler Stack_Hdlr;
 

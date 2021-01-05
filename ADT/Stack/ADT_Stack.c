@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_Stack.c
  * Description   : Abstract Data Type for stack. Implementation with integer
  *                 data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/13/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -43,10 +43,10 @@ t_StackHandler Stack_Hdlr =
 */
 Stack stack_create(uint16_t maxS)
 {
-  Stack newStack = (Stack)malloc(sizeof(stack));  // Memory allocation
-  newStack->size = 0;                             // Initialize empty stack
-  newStack->top = NULL;                           // Initial top
-  newStack->maxSize = maxS;                       // Fix max. size
+  Stack newStack = (Stack)malloc(sizeof(t_stack));  // Memory allocation
+  newStack->size = 0;                               // Initialize empty stack
+  newStack->top = NULL;                             // Initial top
+  newStack->maxSize = maxS;                         // Fix max. size
 
   return newStack;
 }
@@ -79,7 +79,7 @@ uint8_t stack_isFull(Stack stck)
 */
 uint8_t stack_push(Stack stck, Data val)
 {
-  Node newNode = (Node)malloc(sizeof(node)); // Memory allocation for node
+  Node newNode = (Node)malloc(sizeof(t_node)); // Memory allocation for node
 
   // Validates memory allocation
   if(newNode == NULL)
