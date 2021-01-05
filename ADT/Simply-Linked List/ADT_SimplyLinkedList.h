@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_SimplyLinkedList.h
  * Description   : Abstract Data Type for simply linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/26/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -37,24 +37,26 @@
 typedef int Data;
 
 // List node
-typedef struct t_node
+typedef struct node
 {
-  Data            value;    // Stored data
-  struct t_node*  next;     // Pointer to next element
-} node;
+  Data          value;    // Stored data
+  struct node*  next;     // Pointer to next element
+}
+t_node;
 
-typedef node* Node;
+typedef t_node* Node;
 
 // Simply linked list
-typedef struct t_list
+typedef struct list
 {
   uint16_t size;       // List size
   uint16_t maxSize;    // Max. Size
   Node     first;      // First element
   Node     last;       // Last element
-} linked_list;
+}
+t_linked_list;
 
-typedef linked_list* LList;
+typedef t_linked_list* LList;
 
 // List handler
 typedef struct
@@ -68,7 +70,8 @@ typedef struct
   uint8_t (*del)(LList ll, uint16_t index);               // Delete element
   uint8_t (*clear)(LList ll);                             // Clear list
   uint8_t (*erase)(LList ll);                             // Erase list
-}t_LListHandler;
+}
+t_LListHandler;
 
 extern t_LListHandler LList_Hdlr;
 

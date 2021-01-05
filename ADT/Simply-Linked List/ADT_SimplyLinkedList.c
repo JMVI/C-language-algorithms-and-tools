@@ -1,12 +1,12 @@
 /* -----------------------------------------------------------------------------
- * Copyright (C) 2020 Jaime M. Villegas I. <jaime7592@gmail.com>
+ * Copyright (C) 2021 Jaime M. Villegas I. <jaime7592@gmail.com>
  * -----------------------------------------------------------------------------
  * Filename      : ADT_SimplyLinkedList.c
  * Description   : Abstract Data Type for simply linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 07/19/2020
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -45,11 +45,11 @@ t_LListHandler LList_Hdlr =
 */
 LList llist_createLinkedList(uint16_t maxS)
 {
-  LList newList = (LList)malloc(sizeof(linked_list)); // Memory allocation
-  newList->size = 0;                                  // Initializes empty list
-  newList->first = NULL;                              // Initial first element
-  newList->last = NULL;                               // Initial last element
-  newList->maxSize = maxS;                            // Fix max. size
+  LList newList = (LList)malloc(sizeof(t_linked_list)); // Memory allocation
+  newList->size = 0;                                    // Initializes empty list
+  newList->first = NULL;                                // Initial first element
+  newList->last = NULL;                                 // Initial last element
+  newList->maxSize = maxS;                              // Fix max. size
 
   return newList;
 }
@@ -82,7 +82,7 @@ uint8_t llist_isFull(LList ll)
 */
 uint8_t llist_addItem(LList ll, Data val)
 {
-  Node newNode = (Node)malloc(sizeof(node)); // Memory allocation for node
+  Node newNode = (Node)malloc(sizeof(t_node)); // Memory allocation for node
   
   // Validates memory allocation
   if(newNode == NULL)
