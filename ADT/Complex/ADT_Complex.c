@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/04/2021
+ * Last modified : 01/05/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -940,7 +940,6 @@ Complex complex_arccosine(Complex Z)
 {
   Complex Z_num = NULL;         // Numerator
   Complex Z_den = NULL;         // Denominator
-  Complex Z_aux_sum = NULL;     // Summand
   Complex Z_aux_sqrtarg = NULL; // Square root argument
   Complex Z_aux_sqrt = NULL;    // Square root
   Complex Z_aux_logarg = NULL;  // Logarithm argument
@@ -968,27 +967,14 @@ Complex complex_arccosine(Complex Z)
       return NULL;
     }
     
-    // Allocates memory for sum element
-    Z_aux_sum = Cmplx_Hdlr.init(Z->Real, Z->Imag);
-    
-    if(Z_aux_sum == NULL)
-    {
-      // Frees allocated memory for auxiliary variables
-      Cmplx_Hdlr.del(Z_aux_sqrtarg);
-      Cmplx_Hdlr.del(Z_aux_sqrt);
-      
-      return NULL;
-    }
-    
     // Calculates logarithm argument
-    Z_aux_logarg = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
+    Z_aux_logarg = Cmplx_Hdlr.sum(Z, Z_aux_sqrt);
     
     if(Z_aux_logarg == NULL)
     {
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
-      Cmplx_Hdlr.del(Z_aux_sum);
       
       return NULL;
     }
@@ -1001,7 +987,6 @@ Complex complex_arccosine(Complex Z)
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
-      Cmplx_Hdlr.del(Z_aux_sum);
       Cmplx_Hdlr.del(Z_aux_logarg);
       
       return NULL;
@@ -1015,7 +1000,6 @@ Complex complex_arccosine(Complex Z)
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
-      Cmplx_Hdlr.del(Z_aux_sum);
       Cmplx_Hdlr.del(Z_aux_logarg);
       Cmplx_Hdlr.del(Z_num);
       
@@ -1028,7 +1012,6 @@ Complex complex_arccosine(Complex Z)
     // Frees allocated memory for auxiliary variables
     Cmplx_Hdlr.del(Z_aux_sqrtarg);
     Cmplx_Hdlr.del(Z_aux_sqrt);
-    Cmplx_Hdlr.del(Z_aux_sum);
     Cmplx_Hdlr.del(Z_aux_logarg);
     Cmplx_Hdlr.del(Z_num);
     Cmplx_Hdlr.del(Z_den);
@@ -1132,7 +1115,121 @@ Complex complex_arctangent(Complex Z)
 */
 Complex complex_arccosecant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;         // Numerator
+  Complex Z_den = NULL;         // Denominator
+  Complex Z_aux_sum = NULL;     // Summand
+  Complex Z_aux_sqrtarg = NULL; // Square root argument
+  Complex Z_aux_sqrt = NULL;    // Square root
+  Complex Z_aux_num = NULL;     // Numerator of logarithm argument
+  Complex Z_aux_logarg = NULL;  // Logarithm argument
+  Complex Z_acsc = NULL;        // Arccosecant
+
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for sum element
+    Z_aux_sum = Cmplx_Hdlr.init(0, 1);
+    
+    if(Z_aux_sum == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
+    
+    if(Z_aux_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for denominator
+    Z_den = Cmplx_Hdlr.init(0, 1);
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex arccosecant
+    Z_acsc = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_sum);
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+   
+  return Z_acsc;
 }
 
 /**
@@ -1142,7 +1239,121 @@ Complex complex_arccosecant(Complex Z)
 */
 Complex complex_arcsecant(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;         // Numerator
+  Complex Z_den = NULL;         // Denominator
+  Complex Z_aux_sum = NULL;     // Summand
+  Complex Z_aux_sqrtarg = NULL; // Square root argument
+  Complex Z_aux_sqrt = NULL;    // Square root
+  Complex Z_aux_num = NULL;     // Numerator of logarithm argument
+  Complex Z_aux_logarg = NULL;  // Logarithm argument
+  Complex Z_asec = NULL;        // Arcsecant
+
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for sum element
+    Z_aux_sum = Cmplx_Hdlr.init(1, 0);
+    
+    if(Z_aux_sum == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
+    
+    if(Z_aux_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for denominator
+    Z_den = Cmplx_Hdlr.init(0, 1);
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex arcsecant
+    Z_asec = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_sum);
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+   
+  return Z_asec;
 }
 
 /**
@@ -1152,7 +1363,85 @@ Complex complex_arcsecant(Complex Z)
 */
 Complex complex_arccotangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;         // Numerator
+  Complex Z_den = NULL;         // Denominator
+  Complex Z_aux_num = NULL;     // Numerator of logarithm argument
+  Complex Z_aux_den = NULL;     // Denominator of logarithm argument
+  Complex Z_aux_logarg = NULL;  // Logarithm argument
+  Complex Z_acot = NULL;        // Arccotangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.init(Z->Real, Z->Imag + 1);
+    
+    if(Z_aux_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator of logarithm argument
+    Z_aux_den = Cmplx_Hdlr.init(Z->Real, Z->Imag - 1);
+    
+    if(Z_aux_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z_aux_den);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for denominator
+    Z_den = Cmplx_Hdlr.init(0, 2);
+    
+    if(Z_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      Cmplx_Hdlr.del(Z_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex arccotangent
+    Z_acot = Cmplx_Hdlr.division(Z_num, Z_den);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_den);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+    Cmplx_Hdlr.del(Z_num);
+    Cmplx_Hdlr.del(Z_den);
+  }
+  
+  return Z_acot;
 }
 
 /**
@@ -1402,7 +1691,55 @@ Complex complex_hyperbolic_cotangent(Complex Z)
 */
 Complex complex_hyperbolic_arcsine(Complex Z)
 {
-  return NULL;
+  Complex Z_aux_sqrtarg = NULL;  // Square root argument
+  Complex Z_aux_sqrt = NULL;     // Square root
+  Complex Z_aux_logarg = NULL;   // Logarithm argument
+  Complex Z_asinh = NULL;        // Hyperbolic arcsine
+  
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) + 1 ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.sum(Z, Z_aux_sqrt);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arcsine
+    Z_asinh = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+  }
+  
+  return Z_asinh;
 }
 
 /**
@@ -1412,7 +1749,55 @@ Complex complex_hyperbolic_arcsine(Complex Z)
 */
 Complex complex_hyperbolic_arccosine(Complex Z)
 {
-  return NULL;
+  Complex Z_aux_sqrtarg = NULL;  // Square root argument
+  Complex Z_aux_sqrt = NULL;     // Square root
+  Complex Z_aux_logarg = NULL;   // Logarithm argument
+  Complex Z_acosh = NULL;        // Hyperbolic arccosine
+  
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.sum(Z, Z_aux_sqrt);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arccosine
+    Z_acosh = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+  }
+  
+  return Z_acosh;
 }
 
 /**
@@ -1422,7 +1807,69 @@ Complex complex_hyperbolic_arccosine(Complex Z)
 */
 Complex complex_hyperbolic_arctangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;          // Numerator
+  Complex Z_aux_num = NULL;      // Numerator of logarithm argument
+  Complex Z_aux_den = NULL;      // Denominator of logarithm argument
+  Complex Z_aux_logarg = NULL;   // Logarithm argument
+  Complex Z_atanh = NULL;        // Hyperbolic arctangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.init(1 + Z->Real, Z->Imag);
+    
+    if(Z_aux_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator of logarithm argument
+    Z_aux_den = Cmplx_Hdlr.init(1 - Z->Real, -Z->Imag);
+    
+    if(Z_aux_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z_aux_den);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arctangent
+    Z_atanh = Cmplx_Hdlr.scalar(Z_num, 0.5);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_den);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+    Cmplx_Hdlr.del(Z_num);
+  }
+  
+  return Z_atanh;
 }
 
 /**
@@ -1432,7 +1879,86 @@ Complex complex_hyperbolic_arctangent(Complex Z)
 */
 Complex complex_hyperbolic_arccosecant(Complex Z)
 {
-  return NULL;
+  Complex Z_aux_sum = NULL;     // Summand
+  Complex Z_aux_sqrtarg = NULL; // Square root argument
+  Complex Z_aux_sqrt = NULL;    // Square root
+  Complex Z_aux_num = NULL;     // Numerator of logarithm argument
+  Complex Z_aux_logarg = NULL;  // Logarithm argument
+  Complex Z_acsch = NULL;       // Hyperbolic arccosecant
+
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 + pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for sum element
+    Z_aux_sum = Cmplx_Hdlr.init(1, 0);
+    
+    if(Z_aux_sum == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
+    
+    if(Z_aux_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arccosecant
+    Z_acsch = Cmplx_Hdlr.log(Z_aux_logarg);
+
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_sum);
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+  }
+   
+  return Z_acsch;
 }
 
 /**
@@ -1442,7 +1968,86 @@ Complex complex_hyperbolic_arccosecant(Complex Z)
 */
 Complex complex_hyperbolic_arcsecant(Complex Z)
 {
-  return NULL;
+  Complex Z_aux_sum = NULL;     // Summand
+  Complex Z_aux_sqrtarg = NULL; // Square root argument
+  Complex Z_aux_sqrt = NULL;    // Square root
+  Complex Z_aux_num = NULL;     // Numerator of logarithm argument
+  Complex Z_aux_logarg = NULL;  // Logarithm argument
+  Complex Z_asech = NULL;       // Hyperbolic arcsecant
+
+  if(Z != NULL)
+  {
+    // Calculates square root argument
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
+                                     ( sin(2 * Z->Arg)                      ) );
+    
+    if(Z_aux_sqrtarg == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates square root of logarithm argument
+    Z_aux_sqrt = Cmplx_Hdlr.sqrt(Z_aux_sqrtarg);
+    
+    if(Z_aux_sqrt == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      
+      return NULL;
+    }
+    
+    // Allocates memory for sum element
+    Z_aux_sum = Cmplx_Hdlr.init(1, 0);
+    
+    if(Z_aux_sum == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
+    
+    if(Z_aux_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arcsecant
+    Z_asech = Cmplx_Hdlr.log(Z_aux_logarg);
+
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_sqrtarg);
+    Cmplx_Hdlr.del(Z_aux_sqrt);
+    Cmplx_Hdlr.del(Z_aux_sum);
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+  }
+   
+  return Z_asech;
 }
 
 /**
@@ -1452,7 +2057,69 @@ Complex complex_hyperbolic_arcsecant(Complex Z)
 */
 Complex complex_hyperbolic_arccotangent(Complex Z)
 {
-  return NULL;
+  Complex Z_num = NULL;          // Numerator
+  Complex Z_aux_num = NULL;      // Numerator of logarithm argument
+  Complex Z_aux_den = NULL;      // Denominator of logarithm argument
+  Complex Z_aux_logarg = NULL;   // Logarithm argument
+  Complex Z_acoth = NULL;        // Hyperbolic arccotangent
+  
+  if(Z != NULL)
+  {
+    // Calculates numerator of logarithm argument
+    Z_aux_num = Cmplx_Hdlr.init(Z->Real + 1, Z->Imag);
+    
+    if(Z_aux_num == NULL)
+    {
+      return NULL;
+    }
+    
+    // Calculates denominator of logarithm argument
+    Z_aux_den = Cmplx_Hdlr.init(Z->Real - 1, Z->Imag);
+    
+    if(Z_aux_den == NULL)
+    {
+      // Frees allocated memory for auxiliary variable
+      Cmplx_Hdlr.del(Z_aux_num);
+      
+      return NULL;
+    }
+    
+    // Calculates logarithm argument
+    Z_aux_logarg = Cmplx_Hdlr.division(Z_aux_num, Z_aux_den);
+    
+    if(Z_aux_logarg == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      
+      return NULL;
+    }
+    
+    // Calculates numerator
+    Z_num = Cmplx_Hdlr.log(Z_aux_logarg);
+    
+    if(Z_num == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_num);
+      Cmplx_Hdlr.del(Z_aux_den);
+      Cmplx_Hdlr.del(Z_aux_logarg);
+      
+      return NULL;
+    }
+    
+    // Calculates complex hyperbolic arccotangent
+    Z_acoth = Cmplx_Hdlr.scalar(Z_num, 0.5);
+    
+    // Frees allocated memory for auxiliary variables
+    Cmplx_Hdlr.del(Z_aux_num);
+    Cmplx_Hdlr.del(Z_aux_den);
+    Cmplx_Hdlr.del(Z_aux_logarg);
+    Cmplx_Hdlr.del(Z_num);
+  }
+  
+  return Z_acoth;
 }
 
 /**
