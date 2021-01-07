@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/05/2021
+ * Last modified : 01/07/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -95,7 +95,7 @@ void complex_argument(Complex Z)
 {
   if(Z != NULL)
   {
-    if(Z->Real > 0 && Z->Imag != 0)
+    if(Z->Real > 0 || Z->Imag != 0)
     {
       Z->Arg = 2 * atan(Z->Imag / (Z->Mod + Z->Real) );
     }
@@ -233,6 +233,10 @@ uint8_t complex_update(Complex Z, double val, COMPONENT c)
       default:
         return FALSE;    // Invalid arguments
     }
+    
+    // Recalculates modulus and argument
+    complex_modulus(Z);
+    complex_argument(Z);
   
     return TRUE;
   }
@@ -2157,12 +2161,28 @@ uint8_t complex_print(Complex Z, PRINT_FORMAT format)
   {
     // Cartesian form
     case CARTESIAN:
-      printf("%.04f %.04f i\n", Z->Real, Z->Imag);
+      if(Z->Imag > 0)
+      {
+        printf("%.04f + %.04f i\n", Z->Real, Z->Imag);
+      }
+      else if(Z->Imag < 0)
+      {
+        printf("%.04f %.04f i\n", Z->Real, Z->Imag);
+      }
+      else if(Z->Imag == 0)
+      {
+        printf("%.04f\n", Z->Real);
+      }
+      else if(Z->Real == 0)
+      {
+        printf("%.04f i\n", Z->Real);
+      }
+      
       break;
     
     // Polar form
     case POLAR:
-      printf( "%.04f < %.04f i\n", Z->Mod, Cmplx_Hdlr.argument(Z, DEG) );
+      printf( "%.04f < %.04f\n", Z->Mod, Cmplx_Hdlr.argument(Z, DEG) );
       break;
     
     // Euler's formula
