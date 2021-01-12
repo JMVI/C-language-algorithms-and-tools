@@ -5,7 +5,7 @@
  * Description   : Test file for complex numbers ADT.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/07/2021
+ * Last modified : 01/12/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -218,8 +218,8 @@ int main()
   
   printf("\n");
   
-  // Complex arithmetic
-  printf("Complex arithmetic operations:\n");
+  // Complex operations
+  printf("Complex mathematic operations:\n");
   
   printf("\n");
   
@@ -454,6 +454,210 @@ int main()
   // Reinitialize Z5 to a null complex
   Z5 = Cmplx_Hdlr.init(0.0, 0.0);
   
+  // 7. Real exponential
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate exponential
+  Z4 = Cmplx_Hdlr.pow(Z1, 3) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = Z1^3: \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate exponential
+  Z4 = Cmplx_Hdlr.pow(Z1, -2.5) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = Z1^(-2.5): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 8. Natural exponential
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate exponential
+  Z4 = Cmplx_Hdlr.exp(Z1) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = exp(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate exponential
+  Z4 = Cmplx_Hdlr.exp(Z5) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = exp(Z5): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 9. Square root
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate square root
+  Z4 = Cmplx_Hdlr.sqrt(Z1) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sqrt(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate square root
+  Z4 = Cmplx_Hdlr.sqrt(Z5) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sqrt(Z5): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 10. Nth root
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate 5th root
+  Z4 = Cmplx_Hdlr.nthroot(Z1, 5) ;
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN POWER OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = Z1^(1/5): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
   // Delete complex numbers
   if( !Cmplx_Hdlr.del(Z1) || !Cmplx_Hdlr.del(Z2) || !Cmplx_Hdlr.del(Z3) ||
       !Cmplx_Hdlr.del(Z4) || !Cmplx_Hdlr.del(Z5)   )
@@ -461,7 +665,7 @@ int main()
     printf("ERROR DELETING COMPLEX NUMBERS\n");
     exit(-1);
   }
-
+  
   printf("Complex numbers deleted\n");
   printf("\n");
   

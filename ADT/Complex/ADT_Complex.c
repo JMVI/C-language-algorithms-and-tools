@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/07/2021
+ * Last modified : 01/12/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -35,7 +35,7 @@ t_ComplexHandler Cmplx_Hdlr =
   complex_scalar,                    // Scalar product
   complex_division,                  // Division
   complex_reciprocal,                // Reciprocal
-  complex_power,                     // Real exponential
+  complex_power,                     // Real power
   complex_exp,                       // Natural exponential
   complex_sqrt,                      // Square root
   complex_nthroot,                   // Nth complex root
@@ -496,33 +496,29 @@ Complex complex_sqrt(Complex Z)
 /**
 @brief  Calculates the Nth root of a complex number
 @param  Z: Pointer to complex
-@retval Array to complex results
+@retval Complex nth root
 */
-Complex* complex_nthroot(Complex Z, uint8_t n)
+Complex complex_nthroot(Complex Z, uint8_t n)
 {
-  Complex* Z_roots = NULL;
+  Complex Z_root = NULL;
   double Z_root_real = 0, Z_root_imag = 0;
-  uint8_t k = 0;
+  double n_i = (double)(n);
   
-  Z_roots = (Complex*)calloc( n, sizeof(t_complex) ); // Memory allocation
-  
-  if(Z_roots != NULL && Z != NULL)
+  if(Z != NULL && n != 0)
   {
-    // Calculate the n roots of Z using De Moivre's Theorem
-    for(k = 0; k <= n - 1; k++)
-    {
-      // Real part of (k+1)th root
-      Z_root_real = pow(Z->Mod, 1/n) * cos( (Z->Arg + 2*PI*k) / n );
-      
-      // Imaginary part of (k+1)th root
-      Z_root_imag = pow(Z->Mod, 1/n) * sin( (Z->Arg + 2*PI*k) / n );
-      
-      // Initialize complex
-      Z_roots[k] = Cmplx_Hdlr.init(Z_root_real, Z_root_imag);
-    }
+    // Calculate the complex root of Z using De Moivre's Theorem
+    
+    // Real part
+    Z_root_real = pow(Z->Mod, 1/n_i) * cos( (Z->Arg) / n_i );
+    
+    // Imaginary part
+    Z_root_imag = pow(Z->Mod, 1/n_i) * sin( (Z->Arg) / n_i );
+    
+    // Initialize complex
+    Z_root = Cmplx_Hdlr.init(Z_root_real, Z_root_imag);
   }
   
-  return Z_roots;
+  return Z_root;
 }
 
 /**

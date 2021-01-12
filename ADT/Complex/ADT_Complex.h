@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/04/2021
+ * Last modified : 01/12/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -88,10 +88,10 @@ typedef struct complex_handler
   Complex  (*scalar)(Complex Z, double k);                // Scalar product
   Complex  (*division)(Complex Z1, Complex Z2);           // Division
   Complex  (*inv)(Complex Z);                             // Reciprocal
-  Complex  (*pow)(Complex Z, double n);                   // Real exponential
+  Complex  (*pow)(Complex Z, double n);                   // Real power
   Complex  (*exp)(Complex Z);                             // Natural exponential
   Complex  (*sqrt)(Complex Z);                            // Square root
-  Complex* (*nthroot)(Complex Z, uint8_t n);              // Nth complex root
+  Complex  (*nthroot)(Complex Z, uint8_t n);              // Nth complex root
   Complex  (*log)(Complex Z);                             // Natural logarithm
   Complex  (*logn)(Complex Z, uint8_t n);                 // Base-n logarithm
   Complex  (*sin)(Complex Z);                             // Sin(Z)
@@ -258,9 +258,9 @@ extern Complex complex_sqrt(Complex Z);
 /**
 @brief  Calculates the Nth root of a complex number
 @param  Z: Pointer to complex
-@retval Array to complex results
+@retval Complex nth root
 */
-extern Complex* complex_nthroot(Complex Z, uint8_t n);
+extern Complex complex_nthroot(Complex Z, uint8_t n);
 
 /**
 @brief  Calculates the natural logarithm of a complex number
