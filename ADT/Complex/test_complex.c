@@ -5,7 +5,7 @@
  * Description   : Test file for complex numbers ADT.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/12/2021
+ * Last modified : 01/13/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -218,8 +218,8 @@ int main()
   
   printf("\n");
   
-  // Complex operations
-  printf("Complex mathematic operations:\n");
+  // I. Complex operations
+  printf("COMPLEX MATHEMATIC OPERATIONS:\n");
   
   printf("\n");
   
@@ -464,7 +464,7 @@ int main()
   }
   
   // Calculate exponential
-  Z4 = Cmplx_Hdlr.pow(Z1, 3) ;
+  Z4 = Cmplx_Hdlr.pow(Z1, 3);
   
   if(Z4 == NULL)
   {
@@ -492,7 +492,7 @@ int main()
   }
   
   // Calculate exponential
-  Z4 = Cmplx_Hdlr.pow(Z1, -2.5) ;
+  Z4 = Cmplx_Hdlr.pow(Z1, -2.5);
   
   if(Z4 == NULL)
   {
@@ -608,7 +608,7 @@ int main()
   }
   
   // Calculate square root
-  Z4 = Cmplx_Hdlr.sqrt(Z5) ;
+  Z4 = Cmplx_Hdlr.sqrt(Z5);
   
   if(Z4 == NULL)
   {
@@ -638,7 +638,7 @@ int main()
   }
   
   // Calculate 5th root
-  Z4 = Cmplx_Hdlr.nthroot(Z1, 5) ;
+  Z4 = Cmplx_Hdlr.nthroot(Z1, 5);
   
   if(Z4 == NULL)
   {
@@ -647,6 +647,251 @@ int main()
   else
   {
     printf("Z4 = Z1^(1/5): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 11. Natural logarithm
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate logarithm
+  Z4 = Cmplx_Hdlr.log(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN LOGARITHM OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = log(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 12. Decimal logarithm
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate logarithm
+  Z4 = Cmplx_Hdlr.logn(Z1, 10);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN LOGARITHM OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = log10(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // II. Complex trigonometric functions
+  printf("COMPLEX TRIGONOMETRIC FUNCTIONS:\n");
+  
+  printf("\n");
+  
+  // 1. Sin
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate sine
+  Z4 = Cmplx_Hdlr.sin(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN SINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sin(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 2. Cos
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate cosine
+  Z4 = Cmplx_Hdlr.cos(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN COSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = cos(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 3. Tan
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate tangent
+  Z4 = Cmplx_Hdlr.tan(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN TANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = tan(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 4. Csc
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate cosecant
+  Z4 = Cmplx_Hdlr.csc(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN COSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = csc(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 5. Sec
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate secant
+  Z4 = Cmplx_Hdlr.sec(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN SECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sec(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 6. Cot
+  
+   // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate cotangent
+  Z4 = Cmplx_Hdlr.cot(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN COTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = cot(Z1): \n");
     printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
     printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
     printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
