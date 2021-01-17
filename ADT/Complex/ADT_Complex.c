@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for complex numbers.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/12/2021
+ * Last modified : 01/17/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -844,7 +844,7 @@ Complex complex_arcsine(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( - pow(Z->Mod, 2) * sin(2 * Z->Arg)   ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -940,6 +940,7 @@ Complex complex_arccosine(Complex Z)
 {
   Complex Z_num = NULL;         // Numerator
   Complex Z_den = NULL;         // Denominator
+  Complex Z_aux_sum = NULL;     // Summand
   Complex Z_aux_sqrtarg = NULL; // Square root argument
   Complex Z_aux_sqrt = NULL;    // Square root
   Complex Z_aux_logarg = NULL;  // Logarithm argument
@@ -948,8 +949,8 @@ Complex complex_arccosine(Complex Z)
   if(Z != NULL)
   {
     // Calculates square root argument
-    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
+                                     ( - pow(Z->Mod, 2) * sin(2 * Z->Arg)   ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -967,14 +968,27 @@ Complex complex_arccosine(Complex Z)
       return NULL;
     }
     
+    // Allocates memory for sum element
+    Z_aux_sum = Cmplx_Hdlr.init(-Z->Imag, Z->Real);
+    
+    if(Z_aux_sum == NULL)
+    {
+      // Frees allocated memory for auxiliary variables
+      Cmplx_Hdlr.del(Z_aux_sqrtarg);
+      Cmplx_Hdlr.del(Z_aux_sqrt);
+      
+      return NULL;
+    }
+    
     // Calculates logarithm argument
-    Z_aux_logarg = Cmplx_Hdlr.sum(Z, Z_aux_sqrt);
+    Z_aux_logarg = Cmplx_Hdlr.sum(Z_aux_sum, Z_aux_sqrt);
     
     if(Z_aux_logarg == NULL)
     {
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
       
       return NULL;
     }
@@ -987,6 +1001,7 @@ Complex complex_arccosine(Complex Z)
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
       Cmplx_Hdlr.del(Z_aux_logarg);
       
       return NULL;
@@ -1000,6 +1015,7 @@ Complex complex_arccosine(Complex Z)
       // Frees allocated memory for auxiliary variables
       Cmplx_Hdlr.del(Z_aux_sqrtarg);
       Cmplx_Hdlr.del(Z_aux_sqrt);
+      Cmplx_Hdlr.del(Z_aux_sum);
       Cmplx_Hdlr.del(Z_aux_logarg);
       Cmplx_Hdlr.del(Z_num);
       
@@ -1008,6 +1024,8 @@ Complex complex_arccosine(Complex Z)
     
     // Calculates complex arccosine
     Z_acos = Cmplx_Hdlr.division(Z_num, Z_den);
+    Cmplx_Hdlr.update(Z_acos, PI/2 - Z_acos->Real, RE);
+    Cmplx_Hdlr.update(Z_acos, -Z_acos->Imag, IM);
     
     // Frees allocated memory for auxiliary variables
     Cmplx_Hdlr.del(Z_aux_sqrtarg);
@@ -1128,7 +1146,7 @@ Complex complex_arccosecant(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( pow(Z->Mod, 2) * sin(2 * Z->Arg)     ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -1251,8 +1269,8 @@ Complex complex_arcsecant(Complex Z)
   if(Z != NULL)
   {
     // Calculates square root argument
-    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+    Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
+                                     ( pow(Z->Mod, 2) * sin(2 * Z->Arg)     ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -1271,7 +1289,7 @@ Complex complex_arcsecant(Complex Z)
     }
     
     // Allocates memory for sum element
-    Z_aux_sum = Cmplx_Hdlr.init(1, 0);
+    Z_aux_sum = Cmplx_Hdlr.init(0, 1);
     
     if(Z_aux_sum == NULL)
     {
@@ -1342,6 +1360,8 @@ Complex complex_arcsecant(Complex Z)
     
     // Calculates complex arcsecant
     Z_asec = Cmplx_Hdlr.division(Z_num, Z_den);
+    Cmplx_Hdlr.update(Z_asec, PI/2 - Z_asec->Real, RE);
+    Cmplx_Hdlr.update(Z_asec, -Z_asec->Imag, IM);
     
     // Frees allocated memory for auxiliary variables
     Cmplx_Hdlr.del(Z_aux_sqrtarg);
@@ -1565,7 +1585,7 @@ Complex complex_hyperbolic_cosecant(Complex Z)
   if(Z != NULL)
   {
     // Calculates numerator
-    Z_num = Cmplx_Hdlr.init(0, 2);
+    Z_num = Cmplx_Hdlr.init(2, 0);
     
     if(Z_num == NULL)
     {
@@ -1609,7 +1629,7 @@ Complex complex_hyperbolic_secant(Complex Z)
   if(Z != NULL)
   {
     // Calculates numerator
-    Z_num = Cmplx_Hdlr.init(0, 2);
+    Z_num = Cmplx_Hdlr.init(2, 0);
     
     if(Z_num == NULL)
     {
@@ -1700,7 +1720,7 @@ Complex complex_hyperbolic_arcsine(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) + 1 ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( pow(Z->Mod, 2) * sin(2 * Z->Arg)     ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -1758,7 +1778,7 @@ Complex complex_hyperbolic_arccosine(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( pow(Z->Mod, 2) * cos(2 * Z->Arg) - 1 ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( pow(Z->Mod, 2) * sin(2 * Z->Arg)     ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -1890,7 +1910,7 @@ Complex complex_hyperbolic_arccosecant(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 + pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( pow(Z->Mod, 2) * sin(2 * Z->Arg)     ) );
     
     if(Z_aux_sqrtarg == NULL)
     {
@@ -1979,7 +1999,7 @@ Complex complex_hyperbolic_arcsecant(Complex Z)
   {
     // Calculates square root argument
     Z_aux_sqrtarg = Cmplx_Hdlr.init( ( 1 - pow(Z->Mod, 2) * cos(2 * Z->Arg) ), 
-                                     ( sin(2 * Z->Arg)                      ) );
+                                     ( -pow(Z->Mod, 2) * sin(2 * Z->Arg)    ) );
     
     if(Z_aux_sqrtarg == NULL)
     {

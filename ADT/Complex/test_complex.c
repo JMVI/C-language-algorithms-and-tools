@@ -5,7 +5,7 @@
  * Description   : Test file for complex numbers ADT.
  * Version       : 01.00
  * Revision      : 00
- * Last modified : 01/13/2021
+ * Last modified : 01/17/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -725,7 +725,7 @@ int main()
   
   // 1. Sin
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -755,7 +755,7 @@ int main()
   
   // 2. Cos
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -785,7 +785,7 @@ int main()
   
   // 3. Tan
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -815,7 +815,7 @@ int main()
   
   // 4. Csc
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -845,7 +845,7 @@ int main()
   
   // 5. Sec
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -875,7 +875,7 @@ int main()
   
   // 6. Cot
   
-   // Delete Z4 to allocate result
+  // Delete Z4 to allocate result
   if( !Cmplx_Hdlr.del(Z4)   )
   {
     printf("ERROR DELETING Z4\n");
@@ -892,6 +892,551 @@ int main()
   else
   {
     printf("Z4 = cot(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 7. Asin
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arcsine
+  Z4 = Cmplx_Hdlr.asin(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = asin(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 8. Acos
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arccosine
+  Z4 = Cmplx_Hdlr.acos(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCCOSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acos(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 9. Atan
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arctangent
+  Z4 = Cmplx_Hdlr.atan(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = atan(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 10. Acsc
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arccosecant
+  Z4 = Cmplx_Hdlr.acsc(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCCOSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acsc(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 11. Asec
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arcsecant
+  Z4 = Cmplx_Hdlr.asec(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = asec(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 12. Acot
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate arccotangent
+  Z4 = Cmplx_Hdlr.acot(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN ARCCOTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acot(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // III. Complex hyperbolic trigonometric functions
+  printf("COMPLEX HYPERBOLIC TRIGONOMETRIC FUNCTIONS:\n");
+  
+  printf("\n");
+  
+  // 1. Sinh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic sine
+  Z4 = Cmplx_Hdlr.sinh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC SINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sinh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 2. Cosh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic cosine
+  Z4 = Cmplx_Hdlr.cosh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC COSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = cosh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 3. Tanh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic tangent
+  Z4 = Cmplx_Hdlr.tanh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC TANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = tanh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 4. Csch
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic cosecant
+  Z4 = Cmplx_Hdlr.csch(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC COSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = csch(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 5. Sech
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic secant
+  Z4 = Cmplx_Hdlr.sech(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC SECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = sech(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 6. Coth
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic cotangent
+  Z4 = Cmplx_Hdlr.coth(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC COTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = coth(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 7. Asinh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arcsine
+  Z4 = Cmplx_Hdlr.asinh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = asinh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 8. Acosh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arccosine
+  Z4 = Cmplx_Hdlr.acosh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCCOSINE OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acosh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 9. Atanh
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arctangent
+  Z4 = Cmplx_Hdlr.atanh(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = atanh(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 10. Acsch
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arccosecant
+  Z4 = Cmplx_Hdlr.acsch(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCCOSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acsch(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 11. Asech
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arcsecant
+  Z4 = Cmplx_Hdlr.asech(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCSECANT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = asech(Z1): \n");
+    printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
+    printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
+    printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
+    printf( "| Z4 | = %.04f\n", Cmplx_Hdlr.modulus(Z4) );
+    printf( "< Z4 = %.04f deg | Z4 = %.04f rad\n", 
+            Cmplx_Hdlr.argument(Z4, DEG), 
+            Cmplx_Hdlr.argument(Z4, RAD) );
+            
+    printf("\n");
+  }
+  
+  // 12. Acot
+  
+  // Delete Z4 to allocate result
+  if( !Cmplx_Hdlr.del(Z4)   )
+  {
+    printf("ERROR DELETING Z4\n");
+    exit(-1);
+  }
+  
+  // Calculate hyperbolic arccotangent
+  Z4 = Cmplx_Hdlr.acoth(Z1);
+  
+  if(Z4 == NULL)
+  {
+    printf("ERROR IN HYPERBOLIC ARCCOTANGENT OPERATION\n");
+  }
+  else
+  {
+    printf("Z4 = acoth(Z1): \n");
     printf("Rectangular form: Z4 = "); complex_print(Z4, CARTESIAN);
     printf("Polar form: Z4 = "); complex_print(Z4, POLAR);
     printf("Euler's' formula: Z4 = "); complex_print(Z4, EULER);
