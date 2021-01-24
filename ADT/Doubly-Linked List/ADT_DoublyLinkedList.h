@@ -5,7 +5,7 @@
  * Description   : Abstract Data Type for doubly linked list. Implementation 
  *                 with integer data type.
  * Version       : 01.00
- * Revision      : 00
+ * Revision      : 04
  * Last modified : 12/28/2020
  * -----------------------------------------------------------------------------
  */
