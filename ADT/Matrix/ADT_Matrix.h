@@ -4,8 +4,8 @@
  * Filename      : ADT_Matrix.h
  * Description   : Abstract Data Type for matrices. Header file.
  * Version       : 01.00
- * Revision      : 01
- * Last modified : 01/21/2021
+ * Revision      : 02
+ * Last modified : 01/24/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -42,13 +42,16 @@ typedef double Data;
 // Vector (1-D array)
 typedef Data* Vector;
 
+// 2-D Array definition
+typedef Vector* Array;
+
 // Matrix
 typedef struct matrix_struct
 {
   uint8_t rows;
   uint8_t columns;
   double* determinant;
-  Vector* matrix;
+  Array matrix;
 }
 t_matrix;
 
@@ -58,7 +61,7 @@ typedef t_matrix* Matrix;
 typedef struct matrix_handler
 {
   Matrix  (*init)(uint8_t Rows, uint8_t Columns);            // Create Matrix
-  Matrix  (*eye)(uint8_t Rows, uint8_t Columns);             // Identity Matrix
+  Matrix  (*eye)(uint8_t dimension);                         // Identity Matrix
   Matrix  (*isNull)(Matrix M);                               // Null matrix?
   uint8_t (*row)(Matrix M);                                  // Get #rows
   uint8_t (*col)(Matrix M);                                  // Get #columns
@@ -97,11 +100,10 @@ extern Matrix matrix_create(uint8_t rows, uint8_t columns);
 
 /**
 @brief  Allocates memory to create a new identity matrix.
-@param  rows: Number of rows
-        columns: Number of columns
+@param  dimension: Matrix dimension (n x n)
 @retval Pointer to new matrix
 */
-extern Matrix matrix_identity(uint8_t rows, uint8_t columns);
+extern Matrix matrix_identity(uint8_t dimension);
 
 /**
 @brief  Verifies if matrix is null

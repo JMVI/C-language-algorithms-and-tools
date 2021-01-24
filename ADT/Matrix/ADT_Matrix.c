@@ -4,8 +4,8 @@
  * Filename      : ADT_Matrix.c
  * Description   : Abstract Data Type for matrices. Library file.
  * Version       : 01.00
- * Revision      : 00
- * Last modified : 01/21/2021
+ * Revision      : 01
+ * Last modified : 01/24/2021
  * -----------------------------------------------------------------------------
  */
 
@@ -58,46 +58,107 @@ t_MatrixHandler Mx_Hdlr =
 */
 Matrix matrix_create(uint8_t rows, uint8_t columns)
 {
-  Matrix M = NULL;        // New matrix
-  uint8_t i = 0, j = 0;   // Iterators
+  Matrix M = NULL;         // New matrix
+  uint8_t i = 0, j = 0;    // Iterators
 
-  // Allocates memory for pointers array
-  M = (Matrix)calloc( rows, sizeof(Vector) );
-
+  // Allocates memory for matrix structure
+  M = (Matrix)malloc( sizeof(t_matrix) );
+  
   // Returns in case of memory allocation error
   if(M == NULL)
   {
     return M;
   }
+  
+  // Sets matrix dimensions
+  M.rows = rows;
+  M.columns = columns;
+  
+  // Initializes determinant pointer
+  if(rows == columns)
+  {
+    // Determinant is defined only if M is a square matrix
+    /* TODO: Determinant calculation */
+  }
+  else
+  {
+    M.determinant = NULL;
+  }
+  
+  // Allocates memory for pointers array
+  M.matrix = (Array)calloc( rows, sizeof(Vector) );
 
-for(i = 0; i < m; i++)
-   {
-      M[i] = (int*)calloc(n, sizeof(int));
-      if(M[i] == NULL)
+  // Allocates memory each row
+  for(i = 0; i < columns; i++)
+  {
+    M.matrix[i] = (Data*)calloc( columns, sizeof(Data) );
+    
+    // Returns in case of memory allocation error
+    if(M.matrix[i] == NULL)
+    {
+      // Frees allocated elements in the array
+      for(j = 0; j < i; j++)
       {
-         printf("Memory allocation error\n");
-         exit(-1);
+        free( M.matrix[j] );
       }
       
-      for(j = 0; j < n; j++)
+      // Frees determinant pointer
+      if(M.determinant != NULL)
       {
-         printf("M[%d,%d]: ", i + 1, j + 1); scanf("%d", &M[i][j]);
-         printf("\n");
+        free(M.determinant);
       }
-   }
+      
+      // Frees memory allocated for matrix structure
+      free(M);
+      
+      return NULL;
+    }
+  }
+  
+  // Sets matrix elements as zero
+  for(i = 0; i < rows; i++)
+  {
+    for(j = 0; j < columns; j++)
+    {
+      M.matrix[i][j] = 0;
+    }
+  }
    
    return M;
 }
 
 /**
 @brief  Allocates memory to create a new identity matrix.
-@param  rows: Number of rows
-        columns: Number of columns
+@param  dimension: Matrix dimension (n x n)
 @retval Pointer to new matrix
 */
-Matrix matrix_identity(uint8_t rows, uint8_t columns)
+Matrix matrix_identity(uint8_t dimension)
 {
-  return NULL;
+  Matrix M_eye = NULL;         // New identity matrix
+  uint8_t i = 0, j = 0;        // Iterators
+  
+  // Initializes matrix
+  if(dimension != 0)
+  {
+    M_eye = Mx_Hdlr.init(dimension, dimension);
+    
+    if(M_eye != NULL)
+    {
+      // Sets identity matrix elements
+      for(i = 0; i < M_eye.rows; i++)
+      {
+        for(j = 0; j < M_eye.columns; j++)
+        {
+          if(i == j)
+          {
+            M_eye.matrix[i][j] = 1;
+          }
+        }
+      }
+    }
+  }
+  
+  return M_eye;
 }
 
 /**
@@ -107,6 +168,23 @@ Matrix matrix_identity(uint8_t rows, uint8_t columns)
 */
 uint8_t matrix_isNull(Matrix M)
 {
+  uint8_t i = 0, j = 0;        // Iterators
+  
+  if(M != NULL)
+  {
+    // Verifies matrix elements
+    for(i = 0; i < M.rows; i++)
+    {
+      for(j = 0; j < M.columns; j++)
+      {
+        if(M.matrix[i][j] != 0)
+        {
+          return FALSE;
+        }
+      }
+    }
+  }
+  
   return TRUE;
 }
 
@@ -117,7 +195,7 @@ uint8_t matrix_isNull(Matrix M)
 */
 uint8_t matrix_getRows(Matrix M)
 {
-  return 0;
+  return M.rows;
 }
 
 /**
@@ -127,7 +205,7 @@ uint8_t matrix_getRows(Matrix M)
 */
 uint8_t matrix_getColumns(Matrix M)
 {
-  return 0;
+  return M.columns;
 }
 
 /**
@@ -138,7 +216,15 @@ uint8_t matrix_getColumns(Matrix M)
 */
 uint8_t matrix_getDeterminant(Matrix M, double* detval)
 {
-  return TRUE;
+  // Returns determinant if defined
+  if(M.determinant != NULL)
+  {
+    *detval = *M.determinant;
+    
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 /**
@@ -151,7 +237,15 @@ uint8_t matrix_getDeterminant(Matrix M, double* detval)
 */
 uint8_t matrix_update(Matrix M, Data k, uint8_t i, uint8_t j)
 {
-  return TRUE;
+  if(M != NULL)
+  {
+    // Updates ijth element
+    M.matrix[i][j] = k;
+    
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 /**
@@ -162,7 +256,26 @@ uint8_t matrix_update(Matrix M, Data k, uint8_t i, uint8_t j)
 */
 uint8_t matrix_areEqual(Matrix M1, Matrix M2)
 {
-  return 0;
+  uint8_t i = 0, j = 0;        // Iterators
+  
+  if(M1 != NULL && M2 != NULL && M1.rows == M2.rows && M1.columns == M2.columns)
+  {
+    // Verifies matrix elements
+    for(i = 0; i < M1.rows; i++)
+    {
+      for(j = 0; j < M1.columns; j++)
+      {
+        if(M1.matrix[i][j] != M2.matrix[i][j])
+        {
+          return FALSE;
+        }
+      }
+    }
+    
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 /**
